@@ -1,0 +1,11 @@
+Global things:
+- Layout configuration
+- Hot keys configuration
+- Appearance configuration (tray icon, OSD)
+
+Fixes:
+- Make applications work and save :)
+
+Features:
+- Sound files filter
+- Ctrl+Arrow switches between pages

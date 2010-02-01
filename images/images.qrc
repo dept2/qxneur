@@ -1,0 +1,35 @@
+<RCC>
+  <qresource>
+    <file alias="config/appearance.png" >config/preferences-desktop-theme.png</file>
+    <file alias="config/abbreviations.png" >config/accessories-dictionary.png</file>
+    <file alias="config/layout.png" >config/preferences-desktop-locale.png</file>
+    <file alias="config/sound.png" >config/preferences-desktop-sound.png</file>
+    <file alias="config/shortcuts.png" >config/preferences-desktop-keyboard.png</file>
+    <file alias="config/applications.png" >config/applications-other.png</file>
+    <file alias="config/general.png" >config/preferences-other.png</file>
+    <file alias="actions/open.png" >actions/document-open.png</file>
+    <file alias="actions/add.png" >actions/list-add.png</file>
+    <file alias="actions/remove.png" >actions/list-remove.png</file>
+    <file alias="actions/edit.png" >actions/document-edit.png</file>
+    <file alias="actions/settings.png" >actions/preferences-other.png</file>
+    <file alias="actions/about.png" >actions/help-about.png</file>
+    <file alias="actions/quit.png" >actions/application-exit.png</file>
+    <file>flags/Armenian.png</file>
+    <file>flags/Belarusian.png</file>
+    <file>flags/Bulgarian.png</file>
+    <file>flags/Czech.png</file>
+    <file>flags/English.png</file>
+    <file>flags/Estonian.png</file>
+    <file>flags/French.png</file>
+    <file>flags/German.png</file>
+    <file>flags/Kazakh.png</file>
+    <file>flags/Latvian.png</file>
+    <file>flags/Lithuanian.png</file>
+    <file>flags/Polish.png</file>
+    <file>flags/Romanian.png</file>
+    <file>flags/Russian.png</file>
+    <file>flags/Spanish.png</file>
+    <file>flags/Ukrainian.png</file>
+    <file>flags/Unknown.png</file>
+  </qresource>
+</RCC>

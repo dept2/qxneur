@@ -1,0 +1,73 @@
+#!/bin/sh
+
+usage()
+{
+  echo "Usage: ./configure [OPTIONS]"
+  echo
+  echo "Available options:"
+  echo "    --prefix=[PATH]  - Specifies the path to install the project."
+  echo "                       /usr/local is used by default."
+  echo "    --mode=[MODE]    - Specifies the build type used. \"debug\" and"
+  echo "                       \"release\" is supported. \"release\" is default"
+  exit 1
+}
+
+# Detect needed directories
+if [ -n "`echo "$0" | grep ^/`" ]; then
+  script_dir="`dirname "$0"`"
+else
+  script_dir="`dirname "${PWD}/${0}"`"
+fi
+script_dir="`echo "$script_dir" | sed -e 's%/\.$%%'`"
+current_dir=`pwd`
+cmake_module_dir="${script_dir}/CMake"
+
+# Show help
+
+if [ "$1" = "--help" -o "$1" = "-h" ]; then
+  usage
+fi
+
+# Default action
+build_mode=release
+build_prefix=/usr/local
+
+# Parsing the parameters
+while true
+do
+  case ${1} in
+    --prefix=*)
+      build_prefix=`echo $1 | sed -e 's/--prefix=//g'`
+      shift
+      ;;
+    --mode=*)
+      mode=`echo ${1} | sed -e 's/--mode=//g'`
+      if [ ${mode} = "debug" -o ${mode} = "release" ]; then
+        build_mode=${mode}
+      else
+        echo "Error: unrecognised build mode ${mode}. Use \"debug\" or \"release\""
+        exit 1
+      fi
+      shift
+      ;;
+    -*)
+      echo "Error: Unrecognized flag: \"$1\""
+      usage
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+# ... and configure now
+echo "Configuring using prefix \"${build_prefix}\" and mode \"${build_mode}\""
+echo
+cmake . -DCMAKE_BUILD_TYPE=${build_mode} -DCMAKE_INSTALL_PREFIX=${build_prefix} -DCMAKE_MODULE_PATH=${cmake_module_dir}
+
+echo
+if [ $? -eq 0 ]; then
+  echo "Configuring using cmake went well. You may run \"make\" now."
+else
+  echo "There was errors while configuring. Make will not start properly."
+fi
