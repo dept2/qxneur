@@ -131,7 +131,7 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="generalTabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>1</number>
          </property>
          <widget class="QWidget" name="generalTab">
           <attribute name="title">
@@ -173,6 +173,19 @@
              </property>
             </widget>
            </item>
+           <item>
+            <spacer name="verticalSpacer_2">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>110</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </widget>
          <widget class="QWidget" name="typographyTab">
@@ -200,6 +213,26 @@
               <string>Correct space with punctuation</string>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="disableCapsCheckBox">
+             <property name="text">
+              <string>Disable CapsLock button</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>137</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>

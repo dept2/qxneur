@@ -65,6 +65,7 @@ void QXNConfigDialog::load()
   correctAccidentalCapsLockCheckBox->setChecked(xnconfig->correctAccidentalCaps());
   correctTwoCapitalLettersCheckBox->setChecked(xnconfig->correctTwoCapitalLetters());
   correctSpaceWithPunctuationCheckBox->setChecked(xnconfig->correctSpaceWithPunctuation());
+  disableCapsCheckBox->setChecked(xnconfig->disableCaps());
 
   // Advanced options
   saveSelectionCheckBox->setChecked(xnconfig->saveSelection());
@@ -111,6 +112,7 @@ void QXNConfigDialog::save()
   xnconfig->setCorrectAccidentalCaps(correctAccidentalCapsLockCheckBox->isChecked());
   xnconfig->setCorrectTwoCapitalLetters(correctTwoCapitalLettersCheckBox->isChecked());
   xnconfig->setCorrectSpaceWithPunctuation(correctSpaceWithPunctuationCheckBox->isChecked());
+  xnconfig->setDisableCaps(disableCapsCheckBox->isChecked());
 
   // Advanced options
   xnconfig->setSaveSelection(saveSelectionCheckBox->isChecked());
