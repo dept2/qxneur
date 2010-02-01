@@ -183,7 +183,7 @@
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="220"/>
         <source>Disable CapsLock button</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключение кнопки CapsLock</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="254"/>
