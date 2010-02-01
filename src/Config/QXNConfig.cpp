@@ -57,6 +57,7 @@ void QXNConfig::save()
 }
 
 
+// manual_mode parameter
 bool QXNConfig::manualMode() const
 {
   return xnconfig->manual_mode;
@@ -77,6 +78,7 @@ void QXNConfig::setManualModeNow(bool m)
 }
 
 
+// educate parameter
 bool QXNConfig::autoEducate() const
 {
   return xnconfig->educate;
@@ -88,6 +90,7 @@ void QXNConfig::setAutoEducate(bool on)
 }
 
 
+// dont_process_when_press_enter parameter
 bool QXNConfig::noProcessOnEnter() const
 {
   return xnconfig->dont_process_when_press_enter;
@@ -99,6 +102,7 @@ void QXNConfig::setNoProcessOnEnter(bool on)
 }
 
 
+// check_lang_on_process parameter
 bool QXNConfig::checkLanguageDuringInput() const
 {
   return xnconfig->check_lang_on_process;
@@ -110,6 +114,7 @@ void QXNConfig::setCheckLanguageDuringInput(bool on)
 }
 
 
+// correct_incidental_caps parameter
 bool QXNConfig::correctAccidentalCaps() const
 {
   return xnconfig->correct_incidental_caps;
@@ -121,6 +126,7 @@ void QXNConfig::setCorrectAccidentalCaps(bool on)
 }
 
 
+// correct_two_capital_letter parameter
 bool QXNConfig::correctTwoCapitalLetters() const
 {
   return xnconfig->correct_two_capital_letter;
@@ -132,6 +138,7 @@ void QXNConfig::setCorrectTwoCapitalLetters(bool on)
 }
 
 
+// correct_space_with_punctuation parameter
 bool QXNConfig::correctSpaceWithPunctuation() const
 {
   return xnconfig->correct_space_with_punctuation;
@@ -143,6 +150,19 @@ void QXNConfig::setCorrectSpaceWithPunctuation(bool on)
 }
 
 
+// disable_capslock parameter
+bool QXNConfig::disableCaps() const
+{
+    return xnconfig->disable_capslock;
+}
+
+void QXNConfig::setDisableCaps(bool on)
+{
+    xnconfig->disable_capslock = on;
+}
+
+
+// save_selection parameter
 bool QXNConfig::saveSelection() const
 {
   return xnconfig->save_selection;
@@ -165,6 +185,7 @@ void QXNConfig::setSaveKeyboardLog(bool on)
 }
 
 
+// flush_buffer_when_press_enter parameter
 bool QXNConfig::flushInternalBuffers() const
 {
   return xnconfig->flush_buffer_when_press_enter;
@@ -176,6 +197,7 @@ void QXNConfig::setFlushInternalBuffers(bool on)
 }
 
 
+// send_delay parameter
 int QXNConfig::eventSendDelay() const
 {
   return xnconfig->send_delay;
@@ -198,7 +220,7 @@ void QXNConfig::setLogLevel(int level)
 }
 
 
-
+// play_sounds parameter
 bool QXNConfig::soundMode() const
 {
   return xnconfig->play_sounds;
@@ -209,6 +231,7 @@ void QXNConfig::setSoundMode(bool m)
    xnconfig->play_sounds = m;
 }
 
+// sounds list
 QString QXNConfig::actionSound(int action) const
 {
   return QString(xnconfig->sounds[action].file);
@@ -221,6 +244,17 @@ void QXNConfig::setActionSound(int action, const QString& fileName)
   char* str = fileName.toLocal8Bit().data();
   xnconfig->sounds[action].file = new char[strlen(str)+1];
   strcpy(xnconfig->sounds[action].file, str);
+}
+
+// volume_percent parameter
+int QXNConfig::volumePercent() const
+{
+    return xnconfig->volume_percent;
+}
+
+void QXNConfig::setVolumePercent(int percent)
+{
+    xnconfig->volume_percent = percent;
 }
 
 
@@ -268,6 +302,16 @@ void QXNConfig::setManualApps(const QStringList& list)
   xnconfig->manual_apps = stringListToListChar(list);
 }
 
+// remember_layout parameter
+bool QXNConfig::rememberLayout() const
+{
+    return xnconfig->remember_layout;
+}
+
+void QXNConfig::setRememberLayout(bool on)
+{
+    xnconfig->remember_layout = on;
+}
 
 
 bool QXNConfig::ignoreLayoutForAbbreviations() const
@@ -336,3 +380,31 @@ struct _list_char* QXNConfig::stringListToListChar(const QStringList& list)
   return ret;
 }
 
+QString QXNConfig::version() const
+{
+    return QString(xnconfig->version);
+}
+
+
+// show_osd parameter
+bool QXNConfig::showOSD() const
+{
+    return xnconfig->show_osd;
+}
+
+void QXNConfig::setShowOSD(bool on)
+{
+    xnconfig->show_osd = on;
+}
+
+
+// show_popups parameter
+bool QXNConfig::showPopups() const
+{
+    return xnconfig->show_popup;
+}
+
+void QXNConfig::setShowPopups(bool on)
+{
+    xnconfig->show_popup = on;
+}

@@ -29,6 +29,7 @@ class QXNConfig : public QObject
     bool correctAccidentalCaps() const;
     bool correctTwoCapitalLetters() const;
     bool correctSpaceWithPunctuation() const;
+    bool disableCaps() const;
 
     // Advanced options
     bool saveSelection() const;
@@ -39,16 +40,25 @@ class QXNConfig : public QObject
     // Sounds
     bool soundMode() const;
     QString actionSound(int action) const;
+    int volumePercent() const;
 
     // Applications
     QStringList excludedApps() const;
     QStringList layoutRememberApps() const;
     QStringList autoApps() const;
     QStringList manualApps() const;
+    bool rememberLayout() const;
 
     // Abbreviations
     bool ignoreLayoutForAbbreviations() const;
     StringToStringMap abbreviations() const;
+
+    // Version
+    QString version() const;
+
+    // Popups
+    bool showOSD() const;
+    bool showPopups() const;
 
   public slots:
     void load();
@@ -67,6 +77,7 @@ class QXNConfig : public QObject
     void setCorrectAccidentalCaps(bool);
     void setCorrectTwoCapitalLetters(bool);
     void setCorrectSpaceWithPunctuation(bool);
+    void setDisableCaps(bool);
 
     // Advanced options
     void setSaveSelection(bool);
@@ -77,16 +88,22 @@ class QXNConfig : public QObject
     // Sounds
     void setSoundMode(bool on);
     void setActionSound(int action, const QString& fileName);
+    void setVolumePercent(int percent);
 
     // Applications
     void setExcludedApps(const QStringList&);
     void setLayoutRememberApps(const QStringList&);
     void setAutoApps(const QStringList&);
     void setManualApps(const QStringList&);
+    void setRememberLayout(bool on);
 
     // Abbreviations
     void setIgnoreLayoutForAbbreviations(bool);
     void setAbbreviations(const StringToStringMap&);
+
+    // Popups
+    void setShowOSD(bool);
+    void setShowPopups(bool);
 
   protected:
     _xneur_config* xnconfig;
