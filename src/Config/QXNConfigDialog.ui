@@ -131,7 +131,7 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="generalTabWidget">
          <property name="currentIndex">
-          <number>1</number>
+          <number>0</number>
          </property>
          <widget class="QWidget" name="generalTab">
           <attribute name="title">
@@ -369,7 +369,11 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QListWidget" name="customApplicationsList"/>
+           <widget class="QListWidget" name="customApplicationsList">
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -445,11 +449,14 @@
             <property name="editTriggers">
              <set>QAbstractItemView::NoEditTriggers</set>
             </property>
+            <property name="alternatingRowColors">
+             <bool>true</bool>
+            </property>
             <property name="selectionBehavior">
              <enum>QAbstractItemView::SelectRows</enum>
             </property>
-            <property name="gridStyle">
-             <enum>Qt::DotLine</enum>
+            <property name="showGrid">
+             <bool>false</bool>
             </property>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
@@ -740,11 +747,14 @@
          <property name="editTriggers">
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
          </property>
-         <property name="gridStyle">
-          <enum>Qt::DotLine</enum>
+         <property name="showGrid">
+          <bool>false</bool>
          </property>
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
