@@ -12,6 +12,29 @@ extern "C"
 #include <QStringList>
 
 
+// Static functions for conversion between QStringList and _list_char
+QStringList listCharToStringList(_list_char* listChar)
+{
+  QStringList list;
+  for (int i=0; i<listChar->data_count; ++i)
+    list.append(QString::fromLocal8Bit(listChar->data[i].string));
+
+  return list;
+}
+
+
+struct _list_char* stringListToListChar(const QStringList& list)
+{
+  // Note that memory for the _list_char is allocated and must be freed manually
+  _list_char* ret = list_char_init();
+
+  for (int i=0; i<list.size(); ++i)
+    ret->add(ret, list[i].toLocal8Bit());
+
+  return ret;
+}
+
+
 QXNConfig::QXNConfig(QObject* parent)
   : QObject(parent)
 {
@@ -361,26 +384,6 @@ void QXNConfig::setAbbreviations(const StringToStringMap& list)
   xnconfig->abbreviations = stringListToListChar(abbrList);
 }
 
-
-QStringList QXNConfig::listCharToStringList(_list_char* listChar)
-{
-  QStringList list;
-  for (int i=0; i<listChar->data_count; ++i)
-    list.append(QString::fromLocal8Bit(listChar->data[i].string));
-
-  return list;
-}
-
-struct _list_char* QXNConfig::stringListToListChar(const QStringList& list)
-{
-  // Note that memory for the _list_char is allocated and must be freed manually
-  _list_char* ret = list_char_init();
-
-  for (int i=0; i<list.size(); ++i)
-    ret->add(ret, list[i].toLocal8Bit());
-
-  return ret;
-}
 
 QString QXNConfig::version() const
 {
