@@ -10,6 +10,8 @@ INCLUDE(${QT_USE_FILE})
 SET(QT_LUPDATE_EXECUTABLE /usr/bin/lupdate-qt4)
 SET(QT_LRELEASE_EXECUTABLE /usr/bin/lrelease-qt4)
 
+ADD_DEFINITIONS(-DQT_NO_CAST_FROM_ASCII)
+
 SET(sources
   src/main.cpp
   src/QXNeur.cpp

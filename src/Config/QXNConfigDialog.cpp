@@ -162,7 +162,7 @@ void QXNConfigDialog::on_editSoundButton_clicked()
   QString fileName = current->text();
   if (!fileName.isEmpty())
   {
-    fileName.left(fileName.lastIndexOf('/'));
+    fileName.left(fileName.lastIndexOf(QChar::fromAscii('/')));
   }
   else
     fileName = QString();

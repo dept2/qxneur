@@ -73,7 +73,7 @@ void ApplicationSettingsDialog::on_windowSelectButton_clicked()
   XClassHint* classHint = XAllocClassHint();
 
   if (XGetClassHint(display, window, classHint))
-    windowNameEdit->setText(QString(classHint->res_class));
+    windowNameEdit->setText(QString::fromLocal8Bit(classHint->res_class));
 
   XFree(classHint);
 }

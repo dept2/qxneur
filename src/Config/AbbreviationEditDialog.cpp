@@ -8,7 +8,7 @@ AbbreviationEditDialog::AbbreviationEditDialog(QWidget* parent)
 {
   setupUi(this);
 
-  abbreviationEdit->setValidator(new QRegExpValidator(QRegExp("\\S*"), this));
+  abbreviationEdit->setValidator(new QRegExpValidator(QRegExp(QLatin1String("\\S*")), this));
 
   connect(abbreviationEdit, SIGNAL(textChanged(const QString&)), SLOT(verify()));
   connect(fullTextEdit, SIGNAL(textChanged(const QString&)), SLOT(verify()));

@@ -24,6 +24,7 @@ QXNConfig::QXNConfig(QObject* parent)
   load();
 
   // FIXME: temporary console logging
+  /*
   for (int i=0; i<xnconfig->total_languages; i++)
   {
     qDebug("%s", qPrintable(QString("Group: %1, Name: %2")
@@ -33,6 +34,7 @@ QXNConfig::QXNConfig(QObject* parent)
   qDebug("%s", qPrintable(QString("Default group: %1 (%2 total)")
                           .arg(xnconfig->default_group)
                           .arg(xnconfig->total_languages)));
+  */
 }
 
 QXNConfig::~QXNConfig()
@@ -234,7 +236,7 @@ void QXNConfig::setSoundMode(bool m)
 // sounds list
 QString QXNConfig::actionSound(int action) const
 {
-  return QString(xnconfig->sounds[action].file);
+  return QString::fromLocal8Bit(xnconfig->sounds[action].file);
 }
 
 void QXNConfig::setActionSound(int action, const QString& fileName)
@@ -334,7 +336,7 @@ StringToStringMap QXNConfig::abbreviations() const
   {
     // Split the abbreviation string
     QString abbrString = abbrList[i];
-    int splitPosition = abbrString.indexOf(' ');
+    int splitPosition = abbrString.indexOf(QChar::fromAscii(' '));
     QString abbr = abbrString.left(splitPosition);
     QString full = abbrString.mid(splitPosition+1);
 
@@ -352,7 +354,7 @@ void QXNConfig::setAbbreviations(const StringToStringMap& list)
   while (it.hasNext())
   {
     it.next();
-    abbrList.append(QString("%1 %2").arg(it.key()).arg(it.value()));
+    abbrList.append(QString(QLatin1String("%1 %2")).arg(it.key()).arg(it.value()));
   }
 
   xnconfig->abbreviations->uninit(xnconfig->abbreviations);
@@ -364,7 +366,7 @@ QStringList QXNConfig::listCharToStringList(_list_char* listChar)
 {
   QStringList list;
   for (int i=0; i<listChar->data_count; ++i)
-    list.append(listChar->data[i].string);
+    list.append(QString::fromLocal8Bit(listChar->data[i].string));
 
   return list;
 }
@@ -382,7 +384,7 @@ struct _list_char* QXNConfig::stringListToListChar(const QStringList& list)
 
 QString QXNConfig::version() const
 {
-    return QString(xnconfig->version);
+  return QString::fromLocal8Bit(xnconfig->version);
 }
 
 

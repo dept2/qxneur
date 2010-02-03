@@ -23,12 +23,13 @@ QXNeur::QXNeur(int& argc, char** argv)
 
   // Create and install the Qt translator
   QTranslator* qtTranslator = new QTranslator(this);
-  qtTranslator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+  qtTranslator->load(QString(QLatin1String("qt_%1")).arg(QLocale::system().name()),
+                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   installTranslator(qtTranslator);
 
   // Create and install the application translator
   QTranslator* appTranslator = new QTranslator(this);
-  appTranslator->load("qxneur_" + QLocale::system().name());
+  appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()));
   installTranslator(appTranslator);
 
   // Initialize keyboard object
@@ -39,7 +40,7 @@ QXNeur::QXNeur(int& argc, char** argv)
 
   // Initialize the QProcess for xneur running
   xneur = new QProcess(this);
-  xneur->start("xneur");
+  xneur->start(QLatin1String("xneur"));
   if (!xneur->waitForStarted(3000))
     qFatal("%s", qPrintable(tr("Can not start xneur (unknown error)")));
 

@@ -15,12 +15,12 @@ QXNMenu::QXNMenu(QXNConfig* xnconfig, QWidget* parent)
   connect(manualAction, SIGNAL(toggled(bool)), xnconfig, SLOT(setManualModeNow(bool)));
 
   // Settings action
-  addAction(QIcon(":/actions/settings.png"), tr("Settings..."),
+  addAction(QIcon(QLatin1String(":/actions/settings.png")), tr("Settings..."),
             this, SIGNAL(settingsRequested()));
   addSeparator();
 
   // Quit action
-  addAction(QIcon(":/actions/quit.png"), tr("Quit"),
+  addAction(QIcon(QLatin1String(":/actions/quit.png")), tr("Quit"),
             this, SIGNAL(applicationQuit()));
 }
 

@@ -19,62 +19,65 @@ QXNLanguage::~QXNLanguage()
 
 QXNLanguage::Language QXNLanguage::layoutNameToLanguage(const QString& name)
 {
-  if (name=="Belarusian")
+  if (name == QLatin1String("Belarusian"))
     return Belarusian;
-  else if (name=="Bulgarian")
+  else if (name == QLatin1String("Bulgarian"))
     return Bulgarian;
-  else if (name=="Czech")
+  else if (name == QLatin1String("Czech"))
     return Czech;
-  else if (name=="Germany" || name=="Swiss German")
+  else if (name == QLatin1String("Germany") || name == QLatin1String("Swiss German"))
     return German;
-  else if (name=="Danish")
+  else if (name == QLatin1String("Danish"))
     return Danish;
-  else if (name=="Canadian" || name=="Great Britain" || name=="US/ASCII" || name=="USA" || name=="English"
-           || name=="U.S. English")
+  else if (name == QLatin1String("Canadian") || name == QLatin1String("Great Britain")
+           || name == QLatin1String("US/ASCII") || name == QLatin1String("USA")
+           || name == QLatin1String("English") || name == QLatin1String("U.S. English"))
     return English;
-  else if (name=="Spanish")
+  else if (name == QLatin1String("Spanish"))
     return Spanish;
-  else if (name=="Finnish")
+  else if (name == QLatin1String("Finnish"))
     return Finnish;
-  else if (name=="French" || name=="Swiss French")
+  else if (name == QLatin1String("French") || name == QLatin1String("Swiss French"))
     return French;
-  else if (name=="Georgian")
+  else if (name == QLatin1String("Georgian"))
     return Georgian;
-  else if (name=="Greek" || name=="ISO8859-7")
+  else if (name == QLatin1String("Greek") || name == QLatin1String("ISO8859-7"))
     return Greek;
-  else if (name=="Hungarian")
+  else if (name == QLatin1String("Hungarian"))
     return Hungarian;
-  else if (name=="Kazakh")
+  else if (name == QLatin1String("Kazakh"))
     return Kazakh;
-  else if (name=="Icelandic")
+  else if (name == QLatin1String("Icelandic"))
     return Icelandic;
-  else if (name=="Italian")
+  else if (name == QLatin1String("Italian"))
     return Italian;
-  else if (name=="Lithuanian")
+  else if (name == QLatin1String("Lithuanian"))
     return Lithuanian;
-  else if (name=="Latvian")
+  else if (name == QLatin1String("Latvian"))
     return Latvian;
-  else if (name=="Macedonian")
+  else if (name == QLatin1String("Macedonian"))
     return Macedonian;
-  else if (name=="Norwegian")
+  else if (name == QLatin1String("Norwegian"))
     return Norwegian;
-  else if (name=="Polish")
+  else if (name == QLatin1String("Polish"))
     return Polish;
-  else if (name=="Portugese")
+  else if (name == QLatin1String("Portugese"))
     return Portugese;
-  else if (name=="Romanian")
+  else if (name == QLatin1String("Romanian"))
     return Romanian;
-  else if (name=="Russia" || name=="Russia - Winkeys" || name=="Russian")
+  else if (name == QLatin1String("Russia") || name == QLatin1String("Russia - Winkeys")
+           || name == QLatin1String("Russian"))
     return Russian;
-  else if (name=="Slovak")
+  else if (name == QLatin1String("Slovak"))
     return Slovak;
-  else if (name=="Swedish")
+  else if (name == QLatin1String("Swedish"))
     return Swedish;
-  else if (name=="Thai")
+  else if (name == QLatin1String("Thai"))
     return Thai;
-  else if (name=="Ukraine" || name=="Ukraine - Winkeys" || name=="Ukrainian")
+  else if (name == QLatin1String("Ukraine") || name == QLatin1String("Ukraine - Winkeys")
+           || name == QLatin1String("Ukrainian"))
     return Ukrainian;
-  else if (name=="Vietnamese")
+  else if (name == QLatin1String("Vietnamese"))
     return Vietnamese;
   else
     return Unknown;
@@ -85,7 +88,7 @@ QString QXNLanguage::languageToText(Language language)
 {
   // Kind of hack to show the language name and not embed a string with it to code directly
   QMetaEnum lang = staticMetaObject.enumerator(staticMetaObject.indexOfEnumerator("Language"));
-  return lang.valueToKey(language);
+  return QLatin1String(lang.valueToKey(language));
 }
 
 
@@ -130,6 +133,6 @@ QString QXNLanguage::languageToLocalizedText(Language language)
 
 QIcon QXNLanguage::languageIcon(Language language)
 {
-  return QIcon( QString(":/flags/%1.png").arg(QXNLanguage::languageToText(language)) );
+  return QIcon( QString(QLatin1String(":/flags/%1.png")).arg(QXNLanguage::languageToText(language)) );
 }
 
