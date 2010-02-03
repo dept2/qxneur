@@ -466,107 +466,107 @@
             </attribute>
             <row>
              <property name="text">
-              <string>XneurStart</string>
+              <string notr="true">XneurStart</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>XneurReload</string>
+              <string notr="true">XneurReload</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>XneurStop</string>
+              <string notr="true">XneurStop</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>PressKeyLayout1</string>
+              <string notr="true">PressKeyLayout1</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>PressKeyLayout2</string>
+              <string notr="true">PressKeyLayout2</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>PressKeyLayout3</string>
+              <string notr="true">PressKeyLayout3</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>PressKeyLayout4</string>
+              <string notr="true">PressKeyLayout4</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>EnableLayout1</string>
+              <string notr="true">EnableLayout1</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>EnableLayout2</string>
+              <string notr="true">EnableLayout2</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>EnableLayout3</string>
+              <string notr="true">EnableLayout3</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>EnableLayout4</string>
+              <string notr="true">EnableLayout4</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>AutomaticChangeWord</string>
+              <string notr="true">AutomaticChangeWord</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ManualChangeWord</string>
+              <string notr="true">ManualChangeWord</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ChangeString</string>
+              <string notr="true">ChangeString</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ChangeSelected</string>
+              <string notr="true">ChangeSelected</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>TranslitSelected</string>
+              <string notr="true">TranslitSelected</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ChangecaseSelected</string>
+              <string notr="true">ChangecaseSelected</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ReplaceAbbreviation</string>
+              <string notr="true">ReplaceAbbreviation</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>CorrectIncidentalCaps</string>
+              <string notr="true">CorrectIncidentalCaps</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>CorrectTwoCapitalLetter</string>
+              <string notr="true">CorrectTwoCapitalLetter</string>
              </property>
             </row>
             <row>
              <property name="text">
-              <string>ExecuteUserAction</string>
+              <string notr="true">ExecuteUserAction</string>
              </property>
             </row>
             <column>

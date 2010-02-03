@@ -70,12 +70,12 @@
 <context>
     <name>QXNConfig</name>
     <message>
-        <location filename="../src/Config/QXNConfig.cpp" line="21"/>
+        <location filename="../src/Config/QXNConfig.cpp" line="44"/>
         <source>Error initializing xnconfig.</source>
         <translation>Ошибка при инициализации библиотеки xnconfig.</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfig.cpp" line="53"/>
+        <location filename="../src/Config/QXNConfig.cpp" line="76"/>
         <source>Error loading config</source>
         <translation>Ошибка при загрузке файла конфигурации</translation>
     </message>
@@ -265,111 +265,6 @@
         <translation>Включить звуки</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="469"/>
-        <source>XneurStart</source>
-        <translation>Запуск XNeur</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="474"/>
-        <source>XneurReload</source>
-        <translation>Перезапуск XNeur</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="479"/>
-        <source>XneurStop</source>
-        <translation>Остановка XNeur</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="484"/>
-        <source>PressKeyLayout1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="489"/>
-        <source>PressKeyLayout2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="494"/>
-        <source>PressKeyLayout3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="499"/>
-        <source>PressKeyLayout4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="504"/>
-        <source>EnableLayout1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="509"/>
-        <source>EnableLayout2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="514"/>
-        <source>EnableLayout3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="519"/>
-        <source>EnableLayout4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="524"/>
-        <source>AutomaticChangeWord</source>
-        <translation>Автоматическая обработка слова</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="529"/>
-        <source>ManualChangeWord</source>
-        <translation>Ручная обработка слова</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="534"/>
-        <source>ChangeString</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="539"/>
-        <source>ChangeSelected</source>
-        <translation>Обработка выделения</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="544"/>
-        <source>TranslitSelected</source>
-        <translation>Транслитерация выделения</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="549"/>
-        <source>ChangecaseSelected</source>
-        <translation>Смена регистра выделения</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="554"/>
-        <source>ReplaceAbbreviation</source>
-        <translation>Замена сокращения</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="559"/>
-        <source>CorrectIncidentalCaps</source>
-        <translation>Исправление сЛУЧАЙНОГО Caps Lock</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="564"/>
-        <source>CorrectTwoCapitalLetter</source>
-        <translation>Исправление ДВух прописных букв</translation>
-    </message>
-    <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="569"/>
-        <source>ExecuteUserAction</source>
-        <translation>Выполнение пользовательского действия</translation>
-    </message>
-    <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="574"/>
         <source>Action</source>
         <translation>Действие</translation>
@@ -397,22 +292,22 @@
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="617"/>
         <source>Layout 1 key press</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажатие клавиши в раскладке 1</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="622"/>
         <source>Layout 2 key press</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажатие клавиши в раскладке 2</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="627"/>
         <source>Layout 3 key press</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажатие клавиши в раскладке 3</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="632"/>
         <source>Layout 4 key press</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажатие клавиши в раскладке 4</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="637"/>
