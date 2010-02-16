@@ -6,10 +6,6 @@ INCLUDE(common)
 FIND_PACKAGE(Qt4 REQUIRED)
 INCLUDE(${QT_USE_FILE})
 
-# lupdate-qt4 is not detected automatically, using workaround
-SET(QT_LUPDATE_EXECUTABLE /usr/bin/lupdate-qt4)
-SET(QT_LRELEASE_EXECUTABLE /usr/bin/lrelease-qt4)
-
 ADD_DEFINITIONS(-DQT_NO_CAST_FROM_ASCII)
 
 SET(sources
@@ -19,6 +15,7 @@ SET(sources
   src/QXNKeyboard.cpp
   src/QXNMenu.cpp
   src/QXNTrayIcon.cpp
+  src/PropertyMapper.cpp
   src/Config/QXNConfig.cpp
   src/Config/QXNConfigDialog.cpp
   src/Config/ApplicationSettingsDialog.cpp
@@ -60,6 +57,7 @@ ADD_CUSTOM_TARGET(${tr_target} DEPENDS ${qm_files})
 
 # Pre-processing by MOC, UIC and QRC
 QT4_WRAP_CPP(sources ${moc_headers})
+QT4_WRAP_CPP(sources src/PropertyMapper.h OPTIONS -fsrc/PropertyMapperPrivate.h)
 QT4_WRAP_UI(sources ${uis})
 QT4_ADD_RESOURCES(sources ${resources})
 
