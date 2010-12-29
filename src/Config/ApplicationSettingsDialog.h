@@ -16,7 +16,12 @@ class ApplicationSettingsDialog : public QDialog, public Ui::ApplicationSettings
     bool dontProcess();
     bool storeLayout();
 
-    enum LayoutSwitching { Default, Manual, Automatical };
+    enum LayoutSwitching
+    {
+      Default,
+      Manual,
+      Automatical
+    };
     LayoutSwitching layoutSwithching();
 
   protected slots:

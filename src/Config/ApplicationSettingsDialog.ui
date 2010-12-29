@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>307</width>
+    <width>308</width>
     <height>210</height>
    </rect>
   </property>
@@ -146,38 +146,6 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>layoutSwitchingGroup</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>forceAutomaticalRadioButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>175</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>175</x>
-     <y>112</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>layoutSwitchingGroup</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>forceManualRadioButton</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>175</x>
-     <y>113</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>175</x>
-     <y>137</y>
     </hint>
    </hints>
   </connection>

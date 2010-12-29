@@ -16,7 +16,7 @@ extern "C"
 QStringList listCharToStringList(_list_char* listChar)
 {
   QStringList list;
-  for (int i=0; i<listChar->data_count; ++i)
+  for (int i = 0; i < listChar->data_count; ++i)
     list.append(QString::fromLocal8Bit(listChar->data[i].string));
 
   return list;
@@ -28,7 +28,7 @@ struct _list_char* stringListToListChar(const QStringList& list)
   // Note that memory for the _list_char is allocated and must be freed manually
   _list_char* ret = list_char_init();
 
-  for (int i=0; i<list.size(); ++i)
+  for (int i = 0; i < list.size(); ++i)
     ret->add(ret, list[i].toLocal8Bit());
 
   return ret;
@@ -190,12 +190,13 @@ void QXNConfig::setDisableCaps(bool on)
 // save_selection parameter
 bool QXNConfig::saveSelection() const
 {
-  return xnconfig->save_selection;
+//  return xnconfig->save_selection;
+  return true;
 }
 
 void QXNConfig::setSaveSelection(bool on)
 {
-  xnconfig->save_selection = on;
+//  xnconfig->save_selection = on;
 }
 
 
@@ -288,20 +289,24 @@ QStringList QXNConfig::excludedApps() const
   return listCharToStringList(xnconfig->excluded_apps);
 }
 
+
 QStringList QXNConfig::layoutRememberApps() const
 {
   return listCharToStringList(xnconfig->layout_remember_apps);
 }
+
 
 QStringList QXNConfig::autoApps() const
 {
   return listCharToStringList(xnconfig->auto_apps);
 }
 
+
 QStringList QXNConfig::manualApps() const
 {
   return listCharToStringList(xnconfig->manual_apps);
 }
+
 
 void QXNConfig::setExcludedApps(const QStringList& list)
 {

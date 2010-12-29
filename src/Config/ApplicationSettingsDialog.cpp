@@ -24,8 +24,9 @@ ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget* parent)
   verify();
 }
 
+
 ApplicationSettingsDialog::~ApplicationSettingsDialog()
-{}
+{ }
 
 
 Window selectWindow(Display *dpy)
@@ -33,8 +34,7 @@ Window selectWindow(Display *dpy)
   Cursor cursor = XCreateFontCursor(dpy, XC_crosshair);
 
   Window root = RootWindow(dpy, 0);
-  XGrabPointer(dpy, root, False, ButtonPressMask|ButtonReleaseMask,
-               GrabModeSync, GrabModeAsync, root, cursor, CurrentTime);
+  XGrabPointer(dpy, root, False, ButtonPressMask|ButtonReleaseMask, GrabModeSync, GrabModeAsync, root, cursor, CurrentTime);
 
   Window target_win = None;
   int buttons = 0;
@@ -52,11 +52,11 @@ Window selectWindow(Display *dpy)
           if (target_win == None)
             target_win = root;
         }
-        buttons++;
+        ++buttons;
         break;
       case ButtonRelease:
         if (buttons > 0)
-          buttons--;
+          --buttons;
         break;
     }
   }
@@ -64,6 +64,7 @@ Window selectWindow(Display *dpy)
   XUngrabPointer(dpy, CurrentTime);
   return XmuClientWindow(dpy, target_win);
 }
+
 
 void ApplicationSettingsDialog::on_windowSelectButton_clicked()
 {
@@ -81,10 +82,12 @@ void ApplicationSettingsDialog::on_windowSelectButton_clicked()
 
 void ApplicationSettingsDialog::verify()
 {
-  bool e = !windowNameEdit->text().isEmpty() && ( dontProcessCheckBox->isChecked() ||
-                                                  (storeLayoutCheckBox->isVisible() && storeLayoutCheckBox->isChecked() ) ||
-                                                  layoutSwitchingGroup->isChecked() );
-  buttonBox->button(QDialogButtonBox::Ok)->setEnabled( e );
+  storeLayoutCheckBox->setDisabled(dontProcessCheckBox->isChecked());
+  layoutSwitchingGroup->setDisabled(dontProcessCheckBox->isChecked());
+
+  bool e = !windowNameEdit->text().isEmpty() && (dontProcessCheckBox->isChecked() || storeLayoutCheckBox->isChecked() ||
+                                                layoutSwitchingGroup->isChecked());
+  buttonBox->button(QDialogButtonBox::Ok)->setEnabled(e);
 }
 
 
@@ -93,15 +96,18 @@ QString ApplicationSettingsDialog::windowName()
   return windowNameEdit->text();
 }
 
+
 bool ApplicationSettingsDialog::dontProcess()
 {
   return dontProcessCheckBox->isChecked();
 }
 
+
 bool ApplicationSettingsDialog::storeLayout()
 {
   return storeLayoutCheckBox->isChecked();
 }
+
 
 ApplicationSettingsDialog::LayoutSwitching ApplicationSettingsDialog::layoutSwithching()
 {
@@ -112,6 +118,6 @@ ApplicationSettingsDialog::LayoutSwitching ApplicationSettingsDialog::layoutSwit
     else
       return Manual;
   }
-  else
-    return Default;
+
+  return Default;
 }

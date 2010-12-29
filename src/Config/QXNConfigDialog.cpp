@@ -22,8 +22,7 @@ QXNConfigDialog::QXNConfigDialog(QXNConfig* config, QWidget* parent)
 }
 
 QXNConfigDialog::~QXNConfigDialog()
-{
-}
+{ }
 
 
 void QXNConfigDialog::run()
@@ -43,12 +42,14 @@ void QXNConfigDialog::accept()
   QDialog::accept();
 }
 
+
 void QXNConfigDialog::on_buttonBox_clicked(QAbstractButton* button)
 {
   // Apply button clicked
   if (buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole)
     save();
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,6 +100,7 @@ void QXNConfigDialog::load()
   abbreviationListChanged();
 }
 
+
 void QXNConfigDialog::save()
 {
   // Working mode options
@@ -122,7 +124,7 @@ void QXNConfigDialog::save()
 
   // Sounds
   xnconfig->setSoundMode(soundsGroupBox->isChecked());
-  for (int i=0; i<soundsTable->rowCount(); i++)
+  for (int i = 0; i < soundsTable->rowCount(); ++i)
   {
     xnconfig->setActionSound(i, soundsTable->item(i, 1)->text());
   }
@@ -130,12 +132,13 @@ void QXNConfigDialog::save()
   // Abbreviations
   xnconfig->setIgnoreLayoutForAbbreviations(ignoreLayoutForAbbreviationsCheckBox->isChecked());
   StringToStringMap abbrList;
-  for (int i=0; i<abbreviationTable->rowCount(); i++)
+  for (int i = 0; i < abbreviationTable->rowCount(); ++i)
     abbrList[abbreviationTable->item(i, 0)->text()] = abbreviationTable->item(i, 1)->text();
   xnconfig->setAbbreviations(abbrList);
 
   xnconfig->save();
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -148,6 +151,7 @@ void QXNConfigDialog::on_addApplicationButton_clicked()
     qDebug("accepted");
   }
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -171,6 +175,7 @@ void QXNConfigDialog::on_editSoundButton_clicked()
   current->setText(fileName);
 }
 
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void QXNConfigDialog::on_addAbbreviationButton_clicked()
@@ -178,7 +183,7 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
   AbbreviationEditDialog editDialog(this);
 
   bool stopFlag = false;
-  int row=-1;
+  int row = -1;
   while (!stopFlag && (editDialog.exec() == QDialog::Accepted))
   {
     // Try to find the item with identical abbreviation
@@ -205,7 +210,9 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
       stopFlag = true;
     }
     else
+    {
       editDialog.abbreviationEdit->setFocus(Qt::OtherFocusReason);
+    }
   }
 
   // If the item was added (or replaced)
@@ -218,6 +225,7 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
     abbreviationListChanged();
   }
 }
+
 
 void QXNConfigDialog::on_removeAbbreviationButton_clicked()
 {
@@ -236,6 +244,7 @@ void QXNConfigDialog::on_removeAbbreviationButton_clicked()
   // Refresh the buttons
   abbreviationListChanged();
 }
+
 
 void QXNConfigDialog::on_editAbbreviationButton_clicked()
 {
@@ -300,9 +309,10 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
   }
 }
 
+
 void QXNConfigDialog::abbreviationListChanged()
 {
-  bool itemExist = (abbreviationTable->rowCount()!=0);
+  bool itemExist = (abbreviationTable->rowCount() != 0);
   bool itemSelected = (abbreviationTable->currentRow() >= 0);
 
   // Remove
@@ -314,11 +324,12 @@ void QXNConfigDialog::abbreviationListChanged()
   editAbbreviationButton->setEnabled(itemSelected);
 }
 
+
 int QXNConfigDialog::findAbbreviation(const QString& abbreviation)
 {
   int ret=-1;
 
-  for (int i=0; i<abbreviationTable->rowCount(); i++)
+  for (int i = 0; i < abbreviationTable->rowCount(); ++i)
     if (abbreviation == abbreviationTable->item(i, 0)->text())
     {
       ret = i;
@@ -328,12 +339,10 @@ int QXNConfigDialog::findAbbreviation(const QString& abbreviation)
   return ret;
 }
 
+
 bool QXNConfigDialog::replaceAbbreviationQuestion(const QString& abbreviation)
 {
-  return QMessageBox::question(this,
-                               tr("QXNeur"),
+  return QMessageBox::question(this, tr("QXNeur"),
                                tr("Abbreviation \"%1\" already exists. Do you want to replace it?").arg(abbreviation),
-                               QMessageBox::Yes | QMessageBox::No,
-                               QMessageBox::No)
-        == QMessageBox::Yes;
+                               QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes;
 }

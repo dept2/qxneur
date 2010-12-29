@@ -395,12 +395,12 @@
         <translation>Полный текст</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.cpp" line="334"/>
+        <location filename="../src/Config/QXNConfigDialog.cpp" line="345"/>
         <source>QXNeur</source>
         <translation>QXNeur</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.cpp" line="335"/>
+        <location filename="../src/Config/QXNConfigDialog.cpp" line="346"/>
         <source>Abbreviation &quot;%1&quot; already exists. Do you want to replace it?</source>
         <translation>Сокращение &quot;%1&quot; уже существует. Вы действительно хотите переопределить его?</translation>
     </message>
