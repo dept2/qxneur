@@ -369,7 +369,7 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
-           <widget class="QTableWidget" name="customApplicationsList">
+           <widget class="QTableView" name="customApplicationsView">
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>

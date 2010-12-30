@@ -13,21 +13,21 @@ class ApplicationSettingsDialog : public QDialog, public Ui::ApplicationSettings
     ~ApplicationSettingsDialog();
 
     QString windowName();
-    bool dontProcess();
     bool storeLayout();
 
     enum LayoutSwitching
     {
       Default,
       Manual,
-      Automatical
+      Automatical,
+      DontProcess
     };
     LayoutSwitching layoutSwithching();
 
   protected slots:
     void on_windowSelectButton_clicked();
 
-    void verify();
+    void verifyWindowName(const QString& name);
 };
 
 #endif // APPLICATIONSETTINGSDIALOG_H

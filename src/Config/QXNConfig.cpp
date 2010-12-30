@@ -314,11 +314,13 @@ void QXNConfig::setExcludedApps(const QStringList& list)
   xnconfig->excluded_apps = stringListToListChar(list);
 }
 
+
 void QXNConfig::setLayoutRememberApps(const QStringList& list)
 {
   xnconfig->layout_remember_apps->uninit(xnconfig->layout_remember_apps);
   xnconfig->layout_remember_apps = stringListToListChar(list);
 }
+
 
 void QXNConfig::setAutoApps(const QStringList& list)
 {
@@ -326,17 +328,20 @@ void QXNConfig::setAutoApps(const QStringList& list)
   xnconfig->auto_apps = stringListToListChar(list);
 }
 
+
 void QXNConfig::setManualApps(const QStringList& list)
 {
   xnconfig->manual_apps->uninit(xnconfig->manual_apps);
   xnconfig->manual_apps = stringListToListChar(list);
 }
 
+
 // remember_layout parameter
 bool QXNConfig::rememberLayout() const
 {
     return xnconfig->remember_layout;
 }
+
 
 void QXNConfig::setRememberLayout(bool on)
 {
@@ -348,6 +353,7 @@ bool QXNConfig::ignoreLayoutForAbbreviations() const
 {
   return xnconfig->abbr_ignore_layout;
 }
+
 
 void QXNConfig::setIgnoreLayoutForAbbreviations(bool on)
 {
@@ -373,6 +379,7 @@ StringToStringMap QXNConfig::abbreviations() const
 
   return ret;
 }
+
 
 void QXNConfig::setAbbreviations(const StringToStringMap& list)
 {
@@ -413,6 +420,7 @@ bool QXNConfig::showPopups() const
 {
     return xnconfig->show_popup;
 }
+
 
 void QXNConfig::setShowPopups(bool on)
 {

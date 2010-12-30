@@ -20,6 +20,7 @@ SET(sources
   src/Config/QXNConfigDialog.cpp
   src/Config/ApplicationSettingsDialog.cpp
   src/Config/AbbreviationEditDialog.cpp
+  src/Config/QXNApplicationsModel.cpp
 )
 
 SET(moc_headers
@@ -32,6 +33,7 @@ SET(moc_headers
   src/Config/QXNConfigDialog.h
   src/Config/ApplicationSettingsDialog.h
   src/Config/AbbreviationEditDialog.h
+  src/Config/QXNApplicationsModel.h
 )
 
 SET(uis

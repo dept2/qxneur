@@ -1,17 +1,23 @@
 #ifndef QXNCONFIGDIALOG_H
 #define QXNCONFIGDIALOG_H
 
-#include <QDialog>
+// Ui
 #include "ui_QXNConfigDialog.h"
 
+// Qt
+#include <QDialog>
+
+//Local
 class QXNConfig;
+class QXNApplicationsModel;
+
 
 class QXNConfigDialog : public QDialog, public Ui::QXNConfigDialog
 {
   Q_OBJECT
 
   public:
-    QXNConfigDialog(QXNConfig* config, QWidget* parent=0);
+    QXNConfigDialog(QXNConfig* config, QWidget* parent = 0);
     ~QXNConfigDialog();
 
   public slots:
@@ -36,13 +42,16 @@ class QXNConfigDialog : public QDialog, public Ui::QXNConfigDialog
     void abbreviationListChanged();
 
   protected:
-    QXNConfig* xnconfig;
+    QXNConfig* m_xnconfig;
 
     void load();
     void save();
 
     int findAbbreviation(const QString&);
     bool replaceAbbreviationQuestion(const QString&);
+
+  private:
+    QXNApplicationsModel* m_appsModel;
 };
 
 #endif // QXNCONFIGDIALOG_H

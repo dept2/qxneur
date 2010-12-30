@@ -5,6 +5,7 @@
 #include "QXNConfig.h"
 #include "ApplicationSettingsDialog.h"
 #include "AbbreviationEditDialog.h"
+#include "QXNApplicationsModel.h"
 
 // Qt
 #include <QMessageBox>
@@ -12,14 +13,18 @@
 
 
 QXNConfigDialog::QXNConfigDialog(QXNConfig* config, QWidget* parent)
-    : QDialog(parent), xnconfig(config)
+  : QDialog(parent),
+    m_xnconfig(config),
+    m_appsModel(new QXNApplicationsModel(this))
 {
   setupUi(this);
+  customApplicationsView->setModel(m_appsModel);
 
   // Abbreviations
   connect(abbreviationTable, SIGNAL(currentItemChanged(QTableWidgetItem*, QTableWidgetItem*)),
           SLOT(abbreviationListChanged()));
 }
+
 
 QXNConfigDialog::~QXNConfigDialog()
 { }
@@ -56,34 +61,34 @@ void QXNConfigDialog::on_buttonBox_clicked(QAbstractButton* button)
 void QXNConfigDialog::load()
 {
   // Working mode options
-  manualModeCheckBox->setChecked(xnconfig->manualMode());
-  selfEducateCheckBox->setChecked(xnconfig->autoEducate());
-  dontProcessOnEnterCheckBox->setChecked(xnconfig->noProcessOnEnter());
-  checkLanguageDuringInputCheckBox->setChecked(xnconfig->checkLanguageDuringInput());
-  logInputCheckBox->setChecked(xnconfig->saveKeyboardLog());
+  manualModeCheckBox->setChecked(m_xnconfig->manualMode());
+  selfEducateCheckBox->setChecked(m_xnconfig->autoEducate());
+  dontProcessOnEnterCheckBox->setChecked(m_xnconfig->noProcessOnEnter());
+  checkLanguageDuringInputCheckBox->setChecked(m_xnconfig->checkLanguageDuringInput());
+  logInputCheckBox->setChecked(m_xnconfig->saveKeyboardLog());
 
   // Correction options
-  correctAccidentalCapsLockCheckBox->setChecked(xnconfig->correctAccidentalCaps());
-  correctTwoCapitalLettersCheckBox->setChecked(xnconfig->correctTwoCapitalLetters());
-  correctSpaceWithPunctuationCheckBox->setChecked(xnconfig->correctSpaceWithPunctuation());
-  disableCapsCheckBox->setChecked(xnconfig->disableCaps());
+  correctAccidentalCapsLockCheckBox->setChecked(m_xnconfig->correctAccidentalCaps());
+  correctTwoCapitalLettersCheckBox->setChecked(m_xnconfig->correctTwoCapitalLetters());
+  correctSpaceWithPunctuationCheckBox->setChecked(m_xnconfig->correctSpaceWithPunctuation());
+  disableCapsCheckBox->setChecked(m_xnconfig->disableCaps());
 
   // Advanced options
-  saveSelectionCheckBox->setChecked(xnconfig->saveSelection());
-  flushBuffersOnEnterCheckBox->setChecked(xnconfig->flushInternalBuffers());
-  eventSendDelaySpinBox->setValue(xnconfig->eventSendDelay());
-  logLevelCombo->setCurrentIndex(xnconfig->logLevel());
+  saveSelectionCheckBox->setChecked(m_xnconfig->saveSelection());
+  flushBuffersOnEnterCheckBox->setChecked(m_xnconfig->flushInternalBuffers());
+  eventSendDelaySpinBox->setValue(m_xnconfig->eventSendDelay());
+  logLevelCombo->setCurrentIndex(m_xnconfig->logLevel());
 
   // Sounds
-  soundsGroupBox->setChecked(xnconfig->soundMode());
+  soundsGroupBox->setChecked(m_xnconfig->soundMode());
   for (int i=0; i<soundsTable->rowCount(); i++)
   {
-    soundsTable->setItem(i, 1, new QTableWidgetItem(xnconfig->actionSound(i)));
+    soundsTable->setItem(i, 1, new QTableWidgetItem(m_xnconfig->actionSound(i)));
   }
 
   // Abbreviations
-  ignoreLayoutForAbbreviationsCheckBox->setChecked(xnconfig->ignoreLayoutForAbbreviations());
-  StringToStringMap abbrList = xnconfig->abbreviations();
+  ignoreLayoutForAbbreviationsCheckBox->setChecked(m_xnconfig->ignoreLayoutForAbbreviations());
+  StringToStringMap abbrList = m_xnconfig->abbreviations();
 
   // Fill the abbreviation table
   abbreviationTable->setRowCount(abbrList.size());
@@ -98,45 +103,49 @@ void QXNConfigDialog::load()
     abbreviationTable->setItem(i, 1, new QTableWidgetItem(it.value()));
   }
   abbreviationListChanged();
+
+  // Applications
+  m_appsModel->load(m_xnconfig->manualApps(), m_xnconfig->autoApps(), m_xnconfig->excludedApps(),
+                    m_xnconfig->layoutRememberApps());
 }
 
 
 void QXNConfigDialog::save()
 {
   // Working mode options
-  xnconfig->setManualMode(manualModeCheckBox->isChecked());
-  xnconfig->setAutoEducate(selfEducateCheckBox->isChecked());
-  xnconfig->setNoProcessOnEnter(dontProcessOnEnterCheckBox->isChecked());
-  xnconfig->setCheckLanguageDuringInput(checkLanguageDuringInputCheckBox->isChecked());
-  xnconfig->setSaveKeyboardLog(logInputCheckBox->isChecked());
+  m_xnconfig->setManualMode(manualModeCheckBox->isChecked());
+  m_xnconfig->setAutoEducate(selfEducateCheckBox->isChecked());
+  m_xnconfig->setNoProcessOnEnter(dontProcessOnEnterCheckBox->isChecked());
+  m_xnconfig->setCheckLanguageDuringInput(checkLanguageDuringInputCheckBox->isChecked());
+  m_xnconfig->setSaveKeyboardLog(logInputCheckBox->isChecked());
 
   // Correction options
-  xnconfig->setCorrectAccidentalCaps(correctAccidentalCapsLockCheckBox->isChecked());
-  xnconfig->setCorrectTwoCapitalLetters(correctTwoCapitalLettersCheckBox->isChecked());
-  xnconfig->setCorrectSpaceWithPunctuation(correctSpaceWithPunctuationCheckBox->isChecked());
-  xnconfig->setDisableCaps(disableCapsCheckBox->isChecked());
+  m_xnconfig->setCorrectAccidentalCaps(correctAccidentalCapsLockCheckBox->isChecked());
+  m_xnconfig->setCorrectTwoCapitalLetters(correctTwoCapitalLettersCheckBox->isChecked());
+  m_xnconfig->setCorrectSpaceWithPunctuation(correctSpaceWithPunctuationCheckBox->isChecked());
+  m_xnconfig->setDisableCaps(disableCapsCheckBox->isChecked());
 
   // Advanced options
-  xnconfig->setSaveSelection(saveSelectionCheckBox->isChecked());
-  xnconfig->setFlushInternalBuffers(flushBuffersOnEnterCheckBox->isChecked());
-  xnconfig->setEventSendDelay(eventSendDelaySpinBox->value());
-  xnconfig->setLogLevel(logLevelCombo->currentIndex());
+  m_xnconfig->setSaveSelection(saveSelectionCheckBox->isChecked());
+  m_xnconfig->setFlushInternalBuffers(flushBuffersOnEnterCheckBox->isChecked());
+  m_xnconfig->setEventSendDelay(eventSendDelaySpinBox->value());
+  m_xnconfig->setLogLevel(logLevelCombo->currentIndex());
 
   // Sounds
-  xnconfig->setSoundMode(soundsGroupBox->isChecked());
+  m_xnconfig->setSoundMode(soundsGroupBox->isChecked());
   for (int i = 0; i < soundsTable->rowCount(); ++i)
   {
-    xnconfig->setActionSound(i, soundsTable->item(i, 1)->text());
+    m_xnconfig->setActionSound(i, soundsTable->item(i, 1)->text());
   }
 
   // Abbreviations
-  xnconfig->setIgnoreLayoutForAbbreviations(ignoreLayoutForAbbreviationsCheckBox->isChecked());
+  m_xnconfig->setIgnoreLayoutForAbbreviations(ignoreLayoutForAbbreviationsCheckBox->isChecked());
   StringToStringMap abbrList;
   for (int i = 0; i < abbreviationTable->rowCount(); ++i)
     abbrList[abbreviationTable->item(i, 0)->text()] = abbreviationTable->item(i, 1)->text();
-  xnconfig->setAbbreviations(abbrList);
+  m_xnconfig->setAbbreviations(abbrList);
 
-  xnconfig->save();
+  m_xnconfig->save();
 }
 
 

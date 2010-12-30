@@ -42,29 +42,62 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="65"/>
+        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="58"/>
         <source>Layout switching</source>
         <translation>Смена раскладки</translation>
     </message>
     <message>
-        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="51"/>
+        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="87"/>
         <source>Don&apos;t process the input for this application</source>
         <translation>Не обрабатывать ввод для этого приложения</translation>
     </message>
     <message>
-        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="77"/>
+        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="70"/>
         <source>Force automatical layout switching</source>
         <translation>Всегда переключать раскладку автоматически</translation>
     </message>
     <message>
-        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="87"/>
+        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="80"/>
         <source>Force manual layout switching</source>
         <translation>Запретить автоматическую смену раскладки</translation>
     </message>
     <message>
-        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="58"/>
+        <location filename="../src/Config/ApplicationSettingsDialog.ui" line="51"/>
         <source>Store layout for the whole application, not window</source>
         <translation>Одна раскладка для всех окон приложения</translation>
+    </message>
+</context>
+<context>
+    <name>QXNApplicationsModel</name>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="34"/>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="35"/>
+        <source>Whole application layout</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="36"/>
+        <source>Switching</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="60"/>
+        <source>Force automatical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="61"/>
+        <source>Force manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/Config/QXNApplicationsModel.cpp" line="62"/>
+        <source>Don&apos;t process</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -242,20 +275,20 @@
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="383"/>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="782"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="794"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="394"/>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="793"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="805"/>
         <source>Remove</source>
         <translation>Удалить</translation>
     </message>
     <message>
         <location filename="../src/Config/QXNConfigDialog.ui" line="418"/>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="710"/>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="817"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="716"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="829"/>
         <source>Edit...</source>
         <translation>Правка...</translation>
     </message>
@@ -265,142 +298,142 @@
         <translation>Включить звуки</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="574"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="580"/>
         <source>Action</source>
         <translation>Действие</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="579"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="585"/>
         <source>Sound file</source>
         <translation>Звуковой файл</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="584"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="590"/>
         <source>XNeur start</source>
         <translation>Запуск XNeur</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="597"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="603"/>
         <source>XNeur reload</source>
         <translation>Перезапуск XNeur</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="607"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="613"/>
         <source>XNeur stop</source>
         <translation>Остановка XNeur</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="617"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="623"/>
         <source>Layout 1 key press</source>
         <translation>Нажатие клавиши в раскладке 1</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="622"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="628"/>
         <source>Layout 2 key press</source>
         <translation>Нажатие клавиши в раскладке 2</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="627"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="633"/>
         <source>Layout 3 key press</source>
         <translation>Нажатие клавиши в раскладке 3</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="632"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="638"/>
         <source>Layout 4 key press</source>
         <translation>Нажатие клавиши в раскладке 4</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="637"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="643"/>
         <source>Layout 1 activated</source>
         <translation>Включение раскладки 1</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="642"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="648"/>
         <source>Layout 2 activated</source>
         <translation>Включение раскладки 2</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="647"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="653"/>
         <source>Layout 3 activated</source>
         <translation>Включение раскладки 3</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="652"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="658"/>
         <source>Layout 4 activated</source>
         <translation>Включение раскладки 4</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="657"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="663"/>
         <source>Automatic word convert</source>
         <translation>Автоматическая обработка слова</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="662"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="668"/>
         <source>Manual word convert</source>
         <translation>Ручная обработка слова</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="667"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="673"/>
         <source>Convert last string</source>
         <translation>Обработка последней строки</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="672"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="678"/>
         <source>Convert selection</source>
         <translation>Обработка выделения</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="677"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="683"/>
         <source>Transliterate selection</source>
         <translation>Транслитерация выделения</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="682"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="688"/>
         <source>Change selection case</source>
         <translation>Смена регистра выделения</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="687"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="693"/>
         <source>Replace abbreviation</source>
         <translation>Замена сокращения</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="692"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="698"/>
         <source>Correct aCCIDENTIAL CapsLock</source>
         <translation>Исправление сЛУЧАЙНОГО Caps Lock</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="697"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="703"/>
         <source>Correct TWo capital letters</source>
         <translation>Исправление ДВух заглавных букв</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="702"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="708"/>
         <source>Execute user action</source>
         <translation>Выполнение пользовательского действия</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="741"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="747"/>
         <source>Ignore layout for abbreviations</source>
         <translation>Игнорировать раскладку для сокращений</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="767"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="779"/>
         <source>Abbreviation</source>
         <translation>Сокращение</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.ui" line="772"/>
+        <location filename="../src/Config/QXNConfigDialog.ui" line="784"/>
         <source>Full text</source>
         <translation>Полный текст</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.cpp" line="345"/>
+        <location filename="../src/Config/QXNConfigDialog.cpp" line="354"/>
         <source>QXNeur</source>
         <translation>QXNeur</translation>
     </message>
     <message>
-        <location filename="../src/Config/QXNConfigDialog.cpp" line="346"/>
+        <location filename="../src/Config/QXNConfigDialog.cpp" line="355"/>
         <source>Abbreviation &quot;%1&quot; already exists. Do you want to replace it?</source>
         <translation>Сокращение &quot;%1&quot; уже существует. Вы действительно хотите переопределить его?</translation>
     </message>

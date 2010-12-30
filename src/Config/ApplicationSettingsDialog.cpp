@@ -16,12 +16,9 @@ ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget* parent)
 {
   setupUi(this);
 
-  connect(windowNameEdit, SIGNAL(textChanged(const QString&)), SLOT(verify()));
-  connect(dontProcessCheckBox, SIGNAL(toggled(bool)), SLOT(verify()));
-  connect(storeLayoutCheckBox, SIGNAL(toggled(bool)), SLOT(verify()));
-  connect(layoutSwitchingGroup, SIGNAL(toggled(bool)), SLOT(verify()));
+  buttonBox->button(QDialogButtonBox::Ok)->setDisabled(true);
 
-  verify();
+  connect(windowNameEdit, SIGNAL(textChanged(QString)), SLOT(verifyWindowName(QString)));
 }
 
 
@@ -80,26 +77,15 @@ void ApplicationSettingsDialog::on_windowSelectButton_clicked()
 }
 
 
-void ApplicationSettingsDialog::verify()
+void ApplicationSettingsDialog::verifyWindowName(const QString& name)
 {
-  storeLayoutCheckBox->setDisabled(dontProcessCheckBox->isChecked());
-  layoutSwitchingGroup->setDisabled(dontProcessCheckBox->isChecked());
-
-  bool e = !windowNameEdit->text().isEmpty() && (dontProcessCheckBox->isChecked() || storeLayoutCheckBox->isChecked() ||
-                                                layoutSwitchingGroup->isChecked());
-  buttonBox->button(QDialogButtonBox::Ok)->setEnabled(e);
+  buttonBox->button(QDialogButtonBox::Ok)->setDisabled(name.isEmpty());
 }
 
 
 QString ApplicationSettingsDialog::windowName()
 {
   return windowNameEdit->text();
-}
-
-
-bool ApplicationSettingsDialog::dontProcess()
-{
-  return dontProcessCheckBox->isChecked();
 }
 
 
@@ -115,8 +101,10 @@ ApplicationSettingsDialog::LayoutSwitching ApplicationSettingsDialog::layoutSwit
   {
     if (forceAutomaticalRadioButton->isChecked())
       return Automatical;
-    else
+    else if (forceManualRadioButton->isChecked())
       return Manual;
+    else
+      return DontProcess;
   }
 
   return Default;
