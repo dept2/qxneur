@@ -1,12 +1,20 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+# Project
 PROJECT(qxneur)
+
+# Common CMake modules
+SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
 INCLUDE(common)
 
-FIND_PACKAGE(Qt4 REQUIRED)
+# Qt
+FIND_PACKAGE(Qt4 4.6.0 REQUIRED)
 INCLUDE(${QT_USE_FILE})
-
 ADD_DEFINITIONS(-DQT_NO_CAST_FROM_ASCII)
+
+# Directories
+INCLUDE_DIRECTORIES(. src src/Config ${CMAKE_CURRENT_BINARY_DIR})
+
 
 SET(sources
   src/main.cpp
@@ -54,7 +62,7 @@ SET(bin_target qxneur)
 SET(tr_target qxneur_i18n)
 
 # Updating and generating the translation
-QT4_CREATE_TRANSLATION(qm_files ${sources} ${moc_headers} ${uis} ${translations})
+QT4_CREATE_TRANSLATION(qm_files ${CMAKE_CURRENT_SOURCE_DIR}/src ${translations} OPTIONS -no-ui-lines -locations relative -source-language english)
 ADD_CUSTOM_TARGET(${tr_target} DEPENDS ${qm_files})
 
 # Pre-processing by MOC, UIC and QRC
@@ -63,9 +71,7 @@ QT4_WRAP_CPP(sources src/PropertyMapper.h OPTIONS -fsrc/PropertyMapperPrivate.h)
 QT4_WRAP_UI(sources ${uis})
 QT4_ADD_RESOURCES(sources ${resources})
 
-# Setting the include directories
-INCLUDE_DIRECTORIES(. src src/Config build)
-
+# Building the executable
 ADD_EXECUTABLE(${bin_target} ${sources})
 ADD_DEPENDENCIES(${bin_target} ${tr_target})
 TARGET_LINK_LIBRARIES(${bin_target} ${QT_LIBRARIES} xnconfig Xmu)
