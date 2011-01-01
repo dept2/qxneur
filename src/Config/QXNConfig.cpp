@@ -176,25 +176,24 @@ void QXNConfig::setCorrectSpaceWithPunctuation(bool on)
 // disable_capslock parameter
 bool QXNConfig::disableCaps() const
 {
-    return xnconfig->disable_capslock;
+  return xnconfig->disable_capslock;
 }
 
 void QXNConfig::setDisableCaps(bool on)
 {
-    xnconfig->disable_capslock = on;
+  xnconfig->disable_capslock = on;
 }
 
 
 // save_selection parameter
-bool QXNConfig::saveSelection() const
+bool QXNConfig::saveSelectionAfterConvert() const
 {
-//  return xnconfig->save_selection;
-  return true;
+  return xnconfig->save_selection_after_convert;
 }
 
-void QXNConfig::setSaveSelection(bool on)
+void QXNConfig::setSaveSelectionAfterConvert(bool on)
 {
-//  xnconfig->save_selection = on;
+  xnconfig->save_selection_after_convert = on;
 }
 
 
@@ -235,12 +234,12 @@ void QXNConfig::setEventSendDelay(int delay)
 
 int QXNConfig::logLevel() const
 {
-  return xnconfig->log_level;
+  return (xnconfig->log_level - 1);
 }
 
 void QXNConfig::setLogLevel(int level)
 {
-  xnconfig->log_level = level;
+  xnconfig->log_level = (level + 1);
 }
 
 
@@ -404,23 +403,23 @@ QString QXNConfig::version() const
 // show_osd parameter
 bool QXNConfig::showOSD() const
 {
-    return xnconfig->show_osd;
+  return xnconfig->show_osd;
 }
 
 void QXNConfig::setShowOSD(bool on)
 {
-    xnconfig->show_osd = on;
+  xnconfig->show_osd = on;
 }
 
 
 // show_popups parameter
 bool QXNConfig::showPopups() const
 {
-    return xnconfig->show_popup;
+  return xnconfig->show_popup;
 }
 
 
 void QXNConfig::setShowPopups(bool on)
 {
-    xnconfig->show_popup = on;
+  xnconfig->show_popup = on;
 }

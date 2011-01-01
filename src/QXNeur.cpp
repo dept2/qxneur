@@ -15,6 +15,7 @@
 // Qt
 #include <QProcess>
 #include <QTranslator>
+#include <QLocale>
 #include <QLibraryInfo>
 
 
@@ -70,6 +71,8 @@ QXNeur::~QXNeur()
 {
   delete configDialog;
   delete trayMenu;
+
+  delete trayIcon;
 
   // Stop QXNeur
   xneur->terminate();

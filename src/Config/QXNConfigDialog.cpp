@@ -1,11 +1,15 @@
 // Class header
 #include "QXNConfigDialog.h"
 
-// Local components
+// Ui
+#include "ui_QXNConfigDialog.h"
+
+// Local
 #include "QXNConfig.h"
 #include "ApplicationSettingsDialog.h"
 #include "AbbreviationEditDialog.h"
 #include "QXNApplicationsModel.h"
+#include "PropertyMapper.h"
 
 // Qt
 #include <QMessageBox>
@@ -14,15 +18,42 @@
 
 QXNConfigDialog::QXNConfigDialog(QXNConfig* config, QWidget* parent)
   : QDialog(parent),
+    ui(new Ui::QXNConfigDialog),
+    mapper(new PropertyMapper(this)),
     m_xnconfig(config),
     m_appsModel(new QXNApplicationsModel(this))
 {
-  setupUi(this);
-  customApplicationsView->setModel(m_appsModel);
+  ui->setupUi(this);
+  ui->customApplicationsView->setModel(m_appsModel);
 
   // Abbreviations
-  connect(abbreviationTable, SIGNAL(currentItemChanged(QTableWidgetItem*, QTableWidgetItem*)),
+  connect(ui->abbreviationTable, SIGNAL(currentItemChanged(QTableWidgetItem*, QTableWidgetItem*)),
           SLOT(abbreviationListChanged()));
+
+  // Mapping
+  connect(mapper, SIGNAL(propertiesChanged(bool)),
+          ui->buttonBox->button(QDialogButtonBox::Apply), SLOT(setEnabled(bool)));
+
+  // Working mode options
+  mapper->setMapping(ui->manualModeCheckBox, m_xnconfig, "manualMode");
+  mapper->setMapping(ui->selfEducateCheckBox, m_xnconfig, "autoEducate");
+  mapper->setMapping(ui->dontProcessOnEnterCheckBox, m_xnconfig, "noProcessOnEnter");
+  mapper->setMapping(ui->checkLanguageDuringInputCheckBox, m_xnconfig, "checkLanguageDuringInput");
+  mapper->setMapping(ui->logInputCheckBox, m_xnconfig, "saveKeyboardLog");
+
+  // Correction options
+  mapper->setMapping(ui->correctAccidentalCapsLockCheckBox, m_xnconfig, "correctAccidentalCaps");
+  mapper->setMapping(ui->correctTwoCapitalLettersCheckBox, m_xnconfig, "correctTwoCapitalLetters");
+  mapper->setMapping(ui->correctSpaceWithPunctuationCheckBox, m_xnconfig, "correctSpaceWithPunctuation");
+  mapper->setMapping(ui->disableCapsCheckBox, m_xnconfig, "disableCaps");
+
+  // Advanced options
+  mapper->setMapping(ui->saveSelectionCheckBox, m_xnconfig, "saveSelectionAfterConvert");
+  mapper->setMapping(ui->flushBuffersOnEnterCheckBox, m_xnconfig, "flushInternalBuffers");
+  mapper->setMapping(ui->eventSendDelaySpinBox, m_xnconfig, "eventSendDelay");
+  mapper->setMapping(ui->logLevelCombo, "currentIndex", m_xnconfig, "logLevel");
+
+//  mapper->setMapping(, m_xnconfig, "");
 }
 
 
@@ -32,10 +63,10 @@ QXNConfigDialog::~QXNConfigDialog()
 
 void QXNConfigDialog::run()
 {
-  listWidget->setCurrentRow(0);
-  configurationPagesStack->setCurrentIndex(0);
-  generalTabWidget->setCurrentIndex(0);
-  soundsTable->setCurrentCell(0, 1);
+  ui->listWidget->setCurrentRow(0);
+  ui->configurationPagesStack->setCurrentIndex(0);
+  ui->generalTabWidget->setCurrentIndex(0);
+  ui->soundsTable->setCurrentCell(0, 1);
   load();
   show();
 }
@@ -51,7 +82,7 @@ void QXNConfigDialog::accept()
 void QXNConfigDialog::on_buttonBox_clicked(QAbstractButton* button)
 {
   // Apply button clicked
-  if (buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole)
+  if (ui->buttonBox->buttonRole(button) == QDialogButtonBox::ApplyRole)
     save();
 }
 
@@ -60,38 +91,19 @@ void QXNConfigDialog::on_buttonBox_clicked(QAbstractButton* button)
 
 void QXNConfigDialog::load()
 {
-  // Working mode options
-  manualModeCheckBox->setChecked(m_xnconfig->manualMode());
-  selfEducateCheckBox->setChecked(m_xnconfig->autoEducate());
-  dontProcessOnEnterCheckBox->setChecked(m_xnconfig->noProcessOnEnter());
-  checkLanguageDuringInputCheckBox->setChecked(m_xnconfig->checkLanguageDuringInput());
-  logInputCheckBox->setChecked(m_xnconfig->saveKeyboardLog());
-
-  // Correction options
-  correctAccidentalCapsLockCheckBox->setChecked(m_xnconfig->correctAccidentalCaps());
-  correctTwoCapitalLettersCheckBox->setChecked(m_xnconfig->correctTwoCapitalLetters());
-  correctSpaceWithPunctuationCheckBox->setChecked(m_xnconfig->correctSpaceWithPunctuation());
-  disableCapsCheckBox->setChecked(m_xnconfig->disableCaps());
-
-  // Advanced options
-  saveSelectionCheckBox->setChecked(m_xnconfig->saveSelection());
-  flushBuffersOnEnterCheckBox->setChecked(m_xnconfig->flushInternalBuffers());
-  eventSendDelaySpinBox->setValue(m_xnconfig->eventSendDelay());
-  logLevelCombo->setCurrentIndex(m_xnconfig->logLevel());
-
   // Sounds
-  soundsGroupBox->setChecked(m_xnconfig->soundMode());
-  for (int i=0; i<soundsTable->rowCount(); i++)
+  ui->soundsGroupBox->setChecked(m_xnconfig->soundMode());
+  for (int i = 0; i < ui->soundsTable->rowCount(); i++)
   {
-    soundsTable->setItem(i, 1, new QTableWidgetItem(m_xnconfig->actionSound(i)));
+    ui->soundsTable->setItem(i, 1, new QTableWidgetItem(m_xnconfig->actionSound(i)));
   }
 
   // Abbreviations
-  ignoreLayoutForAbbreviationsCheckBox->setChecked(m_xnconfig->ignoreLayoutForAbbreviations());
+  ui->ignoreLayoutForAbbreviationsCheckBox->setChecked(m_xnconfig->ignoreLayoutForAbbreviations());
   StringToStringMap abbrList = m_xnconfig->abbreviations();
 
   // Fill the abbreviation table
-  abbreviationTable->setRowCount(abbrList.size());
+  ui->abbreviationTable->setRowCount(abbrList.size());
   QMapIterator<QString,QString> it(abbrList);
   int i = -1;
   while (it.hasNext())
@@ -99,52 +111,36 @@ void QXNConfigDialog::load()
     it.next();
     ++i;
 
-    abbreviationTable->setItem(i, 0, new QTableWidgetItem(it.key()));
-    abbreviationTable->setItem(i, 1, new QTableWidgetItem(it.value()));
+    ui->abbreviationTable->setItem(i, 0, new QTableWidgetItem(it.key()));
+    ui->abbreviationTable->setItem(i, 1, new QTableWidgetItem(it.value()));
   }
   abbreviationListChanged();
 
   // Applications
   m_appsModel->load(m_xnconfig->manualApps(), m_xnconfig->autoApps(), m_xnconfig->excludedApps(),
                     m_xnconfig->layoutRememberApps());
+
+  mapper->load();
 }
 
 
 void QXNConfigDialog::save()
 {
-  // Working mode options
-  m_xnconfig->setManualMode(manualModeCheckBox->isChecked());
-  m_xnconfig->setAutoEducate(selfEducateCheckBox->isChecked());
-  m_xnconfig->setNoProcessOnEnter(dontProcessOnEnterCheckBox->isChecked());
-  m_xnconfig->setCheckLanguageDuringInput(checkLanguageDuringInputCheckBox->isChecked());
-  m_xnconfig->setSaveKeyboardLog(logInputCheckBox->isChecked());
-
-  // Correction options
-  m_xnconfig->setCorrectAccidentalCaps(correctAccidentalCapsLockCheckBox->isChecked());
-  m_xnconfig->setCorrectTwoCapitalLetters(correctTwoCapitalLettersCheckBox->isChecked());
-  m_xnconfig->setCorrectSpaceWithPunctuation(correctSpaceWithPunctuationCheckBox->isChecked());
-  m_xnconfig->setDisableCaps(disableCapsCheckBox->isChecked());
-
-  // Advanced options
-  m_xnconfig->setSaveSelection(saveSelectionCheckBox->isChecked());
-  m_xnconfig->setFlushInternalBuffers(flushBuffersOnEnterCheckBox->isChecked());
-  m_xnconfig->setEventSendDelay(eventSendDelaySpinBox->value());
-  m_xnconfig->setLogLevel(logLevelCombo->currentIndex());
-
   // Sounds
-  m_xnconfig->setSoundMode(soundsGroupBox->isChecked());
-  for (int i = 0; i < soundsTable->rowCount(); ++i)
+  m_xnconfig->setSoundMode(ui->soundsGroupBox->isChecked());
+  for (int i = 0; i < ui->soundsTable->rowCount(); ++i)
   {
-    m_xnconfig->setActionSound(i, soundsTable->item(i, 1)->text());
+    m_xnconfig->setActionSound(i, ui->soundsTable->item(i, 1)->text());
   }
 
   // Abbreviations
-  m_xnconfig->setIgnoreLayoutForAbbreviations(ignoreLayoutForAbbreviationsCheckBox->isChecked());
+  m_xnconfig->setIgnoreLayoutForAbbreviations(ui->ignoreLayoutForAbbreviationsCheckBox->isChecked());
   StringToStringMap abbrList;
-  for (int i = 0; i < abbreviationTable->rowCount(); ++i)
-    abbrList[abbreviationTable->item(i, 0)->text()] = abbreviationTable->item(i, 1)->text();
+  for (int i = 0; i < ui->abbreviationTable->rowCount(); ++i)
+    abbrList[ui->abbreviationTable->item(i, 0)->text()] = ui->abbreviationTable->item(i, 1)->text();
   m_xnconfig->setAbbreviations(abbrList);
 
+  mapper->apply();
   m_xnconfig->save();
 }
 
@@ -166,12 +162,12 @@ void QXNConfigDialog::on_addApplicationButton_clicked()
 
 void QXNConfigDialog::on_soundsTable_itemDoubleClicked(QTableWidgetItem* item)
 {
-  soundsTable->editItem(soundsTable->item(item->row(), 1));
+  ui->soundsTable->editItem(ui->soundsTable->item(item->row(), 1));
 }
 
 void QXNConfigDialog::on_editSoundButton_clicked()
 {
-  QTableWidgetItem* current = soundsTable->item(soundsTable->currentRow(), 1);
+  QTableWidgetItem* current = ui->soundsTable->item(ui->soundsTable->currentRow(), 1);
   QString fileName = current->text();
   if (!fileName.isEmpty())
   {
@@ -200,12 +196,12 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
     // This abbreviation does not exist
     if (exist == -1)
     {
-      row = abbreviationTable->rowCount();
-      abbreviationTable->insertRow(row);
+      row = ui->abbreviationTable->rowCount();
+      ui->abbreviationTable->insertRow(row);
 
       // Add the item to table
-      abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
-      abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
+      ui->abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
+      ui->abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
 
       stopFlag = true;
     }
@@ -213,8 +209,8 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
     else if (replaceAbbreviationQuestion(editDialog.abbreviation()))
     {
       // Add the item to table
-      abbreviationTable->setItem(exist, 0, new QTableWidgetItem(editDialog.abbreviation()));
-      abbreviationTable->setItem(exist, 1, new QTableWidgetItem(editDialog.fullText()));
+      ui->abbreviationTable->setItem(exist, 0, new QTableWidgetItem(editDialog.abbreviation()));
+      ui->abbreviationTable->setItem(exist, 1, new QTableWidgetItem(editDialog.fullText()));
 
       stopFlag = true;
     }
@@ -228,7 +224,7 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
   if (stopFlag)
   {
     // Select the added item
-    abbreviationTable->setCurrentCell(row, 0);
+    ui->abbreviationTable->setCurrentCell(row, 0);
 
     // Refresh the buttons
     abbreviationListChanged();
@@ -238,17 +234,17 @@ void QXNConfigDialog::on_addAbbreviationButton_clicked()
 
 void QXNConfigDialog::on_removeAbbreviationButton_clicked()
 {
-  int row = abbreviationTable->currentRow();
+  int row = ui->abbreviationTable->currentRow();
   Q_ASSERT(row >= 0);
 
   // Remove row
-  abbreviationTable->removeRow(row);
+  ui->abbreviationTable->removeRow(row);
 
   // Set the cursor to the last nearest item after deletion
-  if (row < abbreviationTable->rowCount())
-    abbreviationTable->setCurrentCell(row, 0);
-  else if (abbreviationTable->rowCount() > 0)
-    abbreviationTable->setCurrentCell(row-1, 0);
+  if (row < ui->abbreviationTable->rowCount())
+    ui->abbreviationTable->setCurrentCell(row, 0);
+  else if (ui->abbreviationTable->rowCount() > 0)
+    ui->abbreviationTable->setCurrentCell(row-1, 0);
 
   // Refresh the buttons
   abbreviationListChanged();
@@ -257,23 +253,23 @@ void QXNConfigDialog::on_removeAbbreviationButton_clicked()
 
 void QXNConfigDialog::on_editAbbreviationButton_clicked()
 {
-  int row = abbreviationTable->currentRow();
+  int row = ui->abbreviationTable->currentRow();
   Q_ASSERT(row >= 0);
 
   // Construct the dialog
   AbbreviationEditDialog editDialog(this);
-  editDialog.setAbbreviation(abbreviationTable->item(row, 0)->text());
-  editDialog.setFullText(abbreviationTable->item(row, 1)->text());
+  editDialog.setAbbreviation(ui->abbreviationTable->item(row, 0)->text());
+  editDialog.setFullText(ui->abbreviationTable->item(row, 1)->text());
 
   bool stopFlag = false;
   while (!stopFlag && (editDialog.exec() == QDialog::Accepted))
   {
     // Only the full text may have been changed
-    if (abbreviationTable->item(row, 0)->text() == editDialog.abbreviation())
+    if (ui->abbreviationTable->item(row, 0)->text() == editDialog.abbreviation())
     {
       // Change the items if dialog is accepted
-      abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
-      abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
+      ui->abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
+      ui->abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
 
       stopFlag = true;
     }
@@ -286,8 +282,8 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
       // No identical abbreviations found, just change the item
       if (exist == -1)
       {
-        abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
-        abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
+        ui->abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
+        ui->abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
 
         stopFlag = true;
       }
@@ -295,10 +291,10 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
       else if(replaceAbbreviationQuestion(editDialog.abbreviation()))
       {
         // User told to replace, let's do what we can
-        abbreviationTable->removeRow(exist);
-        row = abbreviationTable->currentRow();
-        abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
-        abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
+        ui->abbreviationTable->removeRow(exist);
+        row = ui->abbreviationTable->currentRow();
+        ui->abbreviationTable->setItem(row, 0, new QTableWidgetItem(editDialog.abbreviation()));
+        ui->abbreviationTable->setItem(row, 1, new QTableWidgetItem(editDialog.fullText()));
 
         stopFlag = true;
       }
@@ -311,7 +307,7 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
   if (stopFlag)
   {
     // Select the added item
-    abbreviationTable->setCurrentCell(row, 0);
+    ui->abbreviationTable->setCurrentCell(row, 0);
 
     // Refresh the buttons
     abbreviationListChanged();
@@ -321,16 +317,16 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
 
 void QXNConfigDialog::abbreviationListChanged()
 {
-  bool itemExist = (abbreviationTable->rowCount() != 0);
-  bool itemSelected = (abbreviationTable->currentRow() >= 0);
+  bool itemExist = (ui->abbreviationTable->rowCount() != 0);
+  bool itemSelected = (ui->abbreviationTable->currentRow() >= 0);
 
   // Remove
-  removeAbbreviationButton->setVisible(itemExist);
-  removeAbbreviationButton->setEnabled(itemSelected);
+  ui->removeAbbreviationButton->setVisible(itemExist);
+  ui->removeAbbreviationButton->setEnabled(itemSelected);
 
   // Edit
-  editAbbreviationButton->setVisible(itemExist);
-  editAbbreviationButton->setEnabled(itemSelected);
+  ui->editAbbreviationButton->setVisible(itemExist);
+  ui->editAbbreviationButton->setEnabled(itemSelected);
 }
 
 
@@ -338,8 +334,8 @@ int QXNConfigDialog::findAbbreviation(const QString& abbreviation)
 {
   int ret=-1;
 
-  for (int i = 0; i < abbreviationTable->rowCount(); ++i)
-    if (abbreviation == abbreviationTable->item(i, 0)->text())
+  for (int i = 0; i < ui->abbreviationTable->rowCount(); ++i)
+    if (abbreviation == ui->abbreviationTable->item(i, 0)->text())
     {
       ret = i;
       break;

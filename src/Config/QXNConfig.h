@@ -30,7 +30,7 @@ class QXNConfig : public QObject
   Q_PROPERTY(bool disableCaps READ disableCaps WRITE setDisableCaps)
 
   // Advanced options
-  Q_PROPERTY(bool saveSelection READ saveSelection WRITE setSaveSelection)
+  Q_PROPERTY(bool saveSelectionAfterConvert READ saveSelectionAfterConvert WRITE setSaveSelectionAfterConvert)
   Q_PROPERTY(bool flushInternalBuffers READ flushInternalBuffers WRITE setFlushInternalBuffers)
   Q_PROPERTY(int eventSendDelay READ eventSendDelay WRITE setEventSendDelay)
   Q_PROPERTY(int logLevel READ logLevel WRITE setLogLevel)
@@ -91,8 +91,8 @@ class QXNConfig : public QObject
     void setDisableCaps(bool);
 
     // Advanced options
-    bool saveSelection() const;
-    void setSaveSelection(bool);
+    bool saveSelectionAfterConvert() const;
+    void setSaveSelectionAfterConvert(bool);
 
     bool flushInternalBuffers() const;
     void setFlushInternalBuffers(bool);

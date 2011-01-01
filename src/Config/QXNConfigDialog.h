@@ -2,17 +2,23 @@
 #define QXNCONFIGDIALOG_H
 
 // Ui
-#include "ui_QXNConfigDialog.h"
+namespace Ui
+{
+  class QXNConfigDialog;
+};
 
 // Qt
 #include <QDialog>
+class QAbstractButton;
+class QTableWidgetItem;
 
-//Local
+// Local
 class QXNConfig;
 class QXNApplicationsModel;
+class PropertyMapper;
 
 
-class QXNConfigDialog : public QDialog, public Ui::QXNConfigDialog
+class QXNConfigDialog : public QDialog
 {
   Q_OBJECT
 
@@ -41,17 +47,17 @@ class QXNConfigDialog : public QDialog, public Ui::QXNConfigDialog
 
     void abbreviationListChanged();
 
-  protected:
+  private:
+    Ui::QXNConfigDialog* ui;
+    PropertyMapper* mapper;
     QXNConfig* m_xnconfig;
+    QXNApplicationsModel* m_appsModel;
 
     void load();
     void save();
 
     int findAbbreviation(const QString&);
     bool replaceAbbreviationQuestion(const QString&);
-
-  private:
-    QXNApplicationsModel* m_appsModel;
 };
 
 #endif // QXNCONFIGDIALOG_H

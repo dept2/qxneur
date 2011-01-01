@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>495</width>
-    <height>331</height>
+    <width>659</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -372,6 +372,12 @@
            <widget class="QTableView" name="customApplicationsView">
             <property name="alternatingRowColors">
              <bool>true</bool>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="selectionBehavior">
+             <enum>QAbstractItemView::SelectRows</enum>
             </property>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
