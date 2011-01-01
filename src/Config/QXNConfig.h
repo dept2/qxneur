@@ -146,6 +146,9 @@ class QXNConfig : public QObject
     // Version
     QString version() const;
 
+  signals:
+    void configurationSaved();
+
   public slots:
     void load();
     void save();

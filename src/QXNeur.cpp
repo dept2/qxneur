@@ -9,13 +9,16 @@
 #include "QXNConfig.h"
 #include "QXNConfigDialog.h"
 
+// POSIX
+#include <signal.h>
+
 // Qt
 #include <QProcess>
 #include <QTranslator>
 #include <QLibraryInfo>
 
 
-QXNeur::QXNeur(int& argc, char** argv)
+QXNeur::QXNeur(int argc, char** argv)
   : QApplication(argc, argv)
 {
   // Tell QApplication not to close when the configuration dialog is closed
@@ -44,8 +47,11 @@ QXNeur::QXNeur(int& argc, char** argv)
   if (!xneur->waitForStarted(3000))
     qFatal("%s", qPrintable(tr("Can not start xneur (unknown error)")));
 
-  // Initialize the configuration dialog
+  // Initialize the configuration object
   xnconfig = new QXNConfig(this);
+  connect(xnconfig, SIGNAL(configurationSaved()), SLOT(reloadConfiguration()));
+
+  // Initialize the configuration dialog
   configDialog = new QXNConfigDialog(xnconfig);
 
   // Initialize the tray icon context menu
@@ -63,15 +69,16 @@ QXNeur::QXNeur(int& argc, char** argv)
 QXNeur::~QXNeur()
 {
   delete configDialog;
-
   delete trayMenu;
 
-  // TODO: implement the proper stopping of xneur
-  xneur->close();
-  delete xneur;
-
-  delete trayIcon;
-  delete keyboard;
+  // Stop QXNeur
+  xneur->terminate();
+  xneur->waitForFinished(5000);
+  if (xneur->state() != QProcess::NotRunning)
+  {
+    qCritical("xneur didn't react to SIGTERM in 5 seconds. Sending SIGKILL.");
+    xneur->kill();
+  }
 }
 
 
@@ -79,4 +86,10 @@ bool QXNeur::x11EventFilter(XEvent* event)
 {
   keyboard->x11Event(event);
   return false;
+}
+
+
+void QXNeur::reloadConfiguration()
+{
+  kill(xneur->pid(), SIGHUP);
 }

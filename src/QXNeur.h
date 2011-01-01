@@ -19,10 +19,13 @@ class QXNeur : public QApplication
   Q_OBJECT
 
   public:
-    QXNeur(int& argc, char** argv);
+    QXNeur(int argc, char** argv);
     ~QXNeur();
 
     bool x11EventFilter(XEvent* event);
+
+  public slots:
+    void reloadConfiguration();
 
   private:
     QXNKeyboard* keyboard;

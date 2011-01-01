@@ -63,10 +63,7 @@ QXNConfig::QXNConfig(QObject* parent)
 QXNConfig::~QXNConfig()
 {
   if (xnconfig)
-  {
     xnconfig->uninit(xnconfig);
-    xnconfig = 0;
-  }
 }
 
 
@@ -79,6 +76,7 @@ void QXNConfig::load()
 void QXNConfig::save()
 {
   xnconfig->save(xnconfig);
+  emit configurationSaved();
 }
 
 
