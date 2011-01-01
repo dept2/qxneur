@@ -19,9 +19,21 @@ int QXNApplicationsModel::rowCount(const QModelIndex& parent) const
 }
 
 
-int QXNApplicationsModel::columnCount(const QModelIndex& parent) const
+int QXNApplicationsModel::columnCount(const QModelIndex&) const
 {
   return 3;
+}
+
+
+Qt::ItemFlags QXNApplicationsModel::flags(const QModelIndex &index) const
+{
+  if (!index.isValid())
+    return 0;
+
+  if (index.column() == 1)
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsUserCheckable;
+  else
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 
@@ -50,13 +62,14 @@ QVariant QXNApplicationsModel::data(const QModelIndex& index, int role) const
 
   if (role == Qt::DisplayRole)
   {
-    switch (index.row())
+    switch (index.column())
     {
     case 0: return rowData.appName;
     case 2:
     {
-      switch (rowData.wholeApplication)
+      switch (rowData.mode)
       {
+      case QXNApplicationsModelPrivate::Default: return tr("Default");
       case QXNApplicationsModelPrivate::Auto: return tr("Force automatical");
       case QXNApplicationsModelPrivate::Manual: return tr("Force manual");
       case QXNApplicationsModelPrivate::Exclusion: return tr("Don't process");
@@ -66,7 +79,7 @@ QVariant QXNApplicationsModel::data(const QModelIndex& index, int role) const
   }
   else if (role == Qt::CheckStateRole)
   {
-    if (index.row() == 1)
+    if (index.column() == 1)
       return (rowData.wholeApplication) ? Qt::Checked : Qt::Unchecked;
   }
 
@@ -99,5 +112,6 @@ void QXNApplicationsModel::load(const QStringList& manualApps, const QStringList
 
   beginResetModel();
   m_data = result.values();
+
   endResetModel();
 }

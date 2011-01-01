@@ -124,7 +124,7 @@
       </sizepolicy>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="generalPage">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -373,6 +373,9 @@
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
+            <attribute name="verticalHeaderVisible">
+             <bool>false</bool>
+            </attribute>
            </widget>
           </item>
           <item>
@@ -463,12 +466,6 @@
             </attribute>
             <attribute name="verticalHeaderVisible">
              <bool>false</bool>
-            </attribute>
-            <attribute name="verticalHeaderVisible">
-             <bool>false</bool>
-            </attribute>
-            <attribute name="horizontalHeaderStretchLastSection">
-             <bool>true</bool>
             </attribute>
             <row>
              <property name="text">
@@ -767,12 +764,6 @@
          </attribute>
          <attribute name="verticalHeaderVisible">
           <bool>false</bool>
-         </attribute>
-         <attribute name="verticalHeaderVisible">
-          <bool>false</bool>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
          </attribute>
          <column>
           <property name="text">
