@@ -5,6 +5,9 @@
 #include <QX11Info>
 #include <QPushButton>
 
+// Ui
+#include "ui_ApplicationSettingsDialog.h"
+
 // X11
 #include <X11/cursorfont.h>
 #include <X11/Xlib.h>
@@ -12,13 +15,16 @@
 
 
 ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget* parent)
-  : QDialog(parent)
+  : QDialog(parent),
+    ui(new Ui::ApplicationSettingsDialog)
 {
-  setupUi(this);
+  ui->setupUi(this);
 
-  buttonBox->button(QDialogButtonBox::Ok)->setDisabled(true);
+  ui->buttonBox->button(QDialogButtonBox::Ok)->setDisabled(true);
 
-  connect(windowNameEdit, SIGNAL(textChanged(QString)), SLOT(verifyWindowName(QString)));
+  connect(ui->windowNameEdit, SIGNAL(textChanged(QString)), SLOT(verify()));
+  connect(ui->storeLayoutCheckBox, SIGNAL(toggled(bool)), SLOT(verify()));
+  connect(ui->layoutSwitchingGroup, SIGNAL(toggled(bool)), SLOT(verify()));
 }
 
 
@@ -71,37 +77,39 @@ void ApplicationSettingsDialog::on_windowSelectButton_clicked()
   XClassHint* classHint = XAllocClassHint();
 
   if (XGetClassHint(display, window, classHint))
-    windowNameEdit->setText(QString::fromLocal8Bit(classHint->res_class));
+    ui->windowNameEdit->setText(QString::fromLocal8Bit(classHint->res_class));
 
   XFree(classHint);
 }
 
 
-void ApplicationSettingsDialog::verifyWindowName(const QString& name)
+void ApplicationSettingsDialog::verify()
 {
-  buttonBox->button(QDialogButtonBox::Ok)->setDisabled(name.isEmpty());
+  ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!ui->windowNameEdit->text().isEmpty()
+                                                           && (ui->storeLayoutCheckBox->isChecked()
+                                                               || ui->layoutSwitchingGroup->isChecked()));
 }
 
 
 QString ApplicationSettingsDialog::windowName()
 {
-  return windowNameEdit->text();
+  return ui->windowNameEdit->text();
 }
 
 
 bool ApplicationSettingsDialog::storeLayout()
 {
-  return storeLayoutCheckBox->isChecked();
+  return ui->storeLayoutCheckBox->isChecked();
 }
 
 
 ApplicationSettingsDialog::LayoutSwitching ApplicationSettingsDialog::layoutSwithching()
 {
-  if (layoutSwitchingGroup->isChecked())
+  if (ui->layoutSwitchingGroup->isChecked())
   {
-    if (forceAutomaticalRadioButton->isChecked())
+    if (ui->forceAutomaticalRadioButton->isChecked())
       return Automatical;
-    else if (forceManualRadioButton->isChecked())
+    else if (ui->forceManualRadioButton->isChecked())
       return Manual;
     else
       return DontProcess;

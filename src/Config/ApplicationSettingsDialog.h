@@ -1,10 +1,17 @@
 #ifndef APPLICATIONSETTINGSDIALOG_H
 #define APPLICATIONSETTINGSDIALOG_H
 
+// Qt
 #include <QDialog>
-#include "ui_ApplicationSettingsDialog.h"
 
-class ApplicationSettingsDialog : public QDialog, public Ui::ApplicationSettingsDialog
+// Ui
+namespace Ui
+{
+  class ApplicationSettingsDialog;
+};
+
+
+class ApplicationSettingsDialog : public QDialog
 {
   Q_OBJECT
 
@@ -24,10 +31,13 @@ class ApplicationSettingsDialog : public QDialog, public Ui::ApplicationSettings
     };
     LayoutSwitching layoutSwithching();
 
-  protected slots:
+  private slots:
     void on_windowSelectButton_clicked();
 
-    void verifyWindowName(const QString& name);
+    void verify();
+
+  private:
+    Ui::ApplicationSettingsDialog* ui;
 };
 
 #endif // APPLICATIONSETTINGSDIALOG_H
