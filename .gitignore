@@ -8,3 +8,9 @@ cmake_install.cmake
 # IDE Project files
 CMakeLists.txt.user
 *.cbp
+
+# Build files
+*.cxx
+ui_*.h
+qxneur
+qxneur_*.qm
