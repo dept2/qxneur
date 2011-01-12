@@ -1,9 +1,9 @@
-#include "AbbreviationEditDialog.h"
+#include "QXNAbbreviationEditDialog.h"
 
 #include <QPushButton>
 #include <QRegExpValidator>
 
-AbbreviationEditDialog::AbbreviationEditDialog(QWidget* parent)
+QXNAbbreviationEditDialog::QXNAbbreviationEditDialog(QWidget* parent)
   : QDialog(parent)
 {
   setupUi(this);
@@ -14,33 +14,33 @@ AbbreviationEditDialog::AbbreviationEditDialog(QWidget* parent)
   connect(fullTextEdit, SIGNAL(textChanged(const QString&)), SLOT(verify()));
 }
 
-AbbreviationEditDialog::~AbbreviationEditDialog()
+QXNAbbreviationEditDialog::~QXNAbbreviationEditDialog()
 {}
 
 
-QString AbbreviationEditDialog::abbreviation() const
+QString QXNAbbreviationEditDialog::abbreviation() const
 {
   return abbreviationEdit->text();
 }
 
-void AbbreviationEditDialog::setAbbreviation(const QString& s)
+void QXNAbbreviationEditDialog::setAbbreviation(const QString& s)
 {
   abbreviationEdit->setText(s);
 }
 
 
-QString AbbreviationEditDialog::fullText() const
+QString QXNAbbreviationEditDialog::fullText() const
 {
   return fullTextEdit->text();
 }
 
-void AbbreviationEditDialog::setFullText(const QString& s)
+void QXNAbbreviationEditDialog::setFullText(const QString& s)
 {
   fullTextEdit->setText(s);
 }
 
 
-void AbbreviationEditDialog::verify()
+void QXNAbbreviationEditDialog::verify()
 {
   buttonBox->button(QDialogButtonBox::Ok)->setEnabled( !abbreviation().isEmpty() && !fullText().isEmpty() );
 }

@@ -1,5 +1,5 @@
-#ifndef APPLICATIONSETTINGSDIALOG_H
-#define APPLICATIONSETTINGSDIALOG_H
+#ifndef QXNAPPLICATIONSETTINGSDIALOG_H
+#define QXNAPPLICATIONSETTINGSDIALOG_H
 
 // Qt
 #include <QDialog>
@@ -7,17 +7,17 @@
 // Ui
 namespace Ui
 {
-  class ApplicationSettingsDialog;
+  class QXNApplicationSettingsDialog;
 };
 
 
-class ApplicationSettingsDialog : public QDialog
+class QXNApplicationSettingsDialog : public QDialog
 {
   Q_OBJECT
 
   public:
-    ApplicationSettingsDialog(QWidget* parent=0);
-    ~ApplicationSettingsDialog();
+    QXNApplicationSettingsDialog(QWidget* parent=0);
+    ~QXNApplicationSettingsDialog();
 
     QString windowName();
     bool storeLayout();
@@ -37,7 +37,7 @@ class ApplicationSettingsDialog : public QDialog
     void verify();
 
   private:
-    Ui::ApplicationSettingsDialog* ui;
+    Ui::QXNApplicationSettingsDialog* ui;
 };
 
-#endif // APPLICATIONSETTINGSDIALOG_H
+#endif // QXNAPPLICATIONSETTINGSDIALOG_H

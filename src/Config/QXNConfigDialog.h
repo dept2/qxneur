@@ -35,6 +35,7 @@ class QXNConfigDialog : public QDialog
 
     // Applications
     void on_addApplicationButton_clicked();
+    void on_removeApplicationButton_clicked();
 
     // Sounds
     void on_soundsTable_itemDoubleClicked(QTableWidgetItem*);
@@ -46,6 +47,8 @@ class QXNConfigDialog : public QDialog
     void on_editAbbreviationButton_clicked();
 
     void abbreviationListChanged();
+
+    void customApplicationsSelectionChanged();
 
   private:
     Ui::QXNConfigDialog* ui;

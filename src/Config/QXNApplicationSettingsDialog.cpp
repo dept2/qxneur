@@ -1,12 +1,12 @@
 // Local
-#include "ApplicationSettingsDialog.h"
+#include "QXNApplicationSettingsDialog.h"
 
 // Qt
 #include <QX11Info>
 #include <QPushButton>
 
 // Ui
-#include "ui_ApplicationSettingsDialog.h"
+#include "ui_QXNApplicationSettingsDialog.h"
 
 // X11
 #include <X11/cursorfont.h>
@@ -14,9 +14,9 @@
 #include <X11/Xmu/WinUtil.h>
 
 
-ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget* parent)
+QXNApplicationSettingsDialog::QXNApplicationSettingsDialog(QWidget* parent)
   : QDialog(parent),
-    ui(new Ui::ApplicationSettingsDialog)
+    ui(new Ui::QXNApplicationSettingsDialog)
 {
   ui->setupUi(this);
 
@@ -28,7 +28,7 @@ ApplicationSettingsDialog::ApplicationSettingsDialog(QWidget* parent)
 }
 
 
-ApplicationSettingsDialog::~ApplicationSettingsDialog()
+QXNApplicationSettingsDialog::~QXNApplicationSettingsDialog()
 { }
 
 
@@ -69,7 +69,7 @@ Window selectWindow(Display *dpy)
 }
 
 
-void ApplicationSettingsDialog::on_windowSelectButton_clicked()
+void QXNApplicationSettingsDialog::on_windowSelectButton_clicked()
 {
   Display* display = QX11Info::display();
   Window window = selectWindow(display);
@@ -83,7 +83,7 @@ void ApplicationSettingsDialog::on_windowSelectButton_clicked()
 }
 
 
-void ApplicationSettingsDialog::verify()
+void QXNApplicationSettingsDialog::verify()
 {
   ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!ui->windowNameEdit->text().isEmpty()
                                                            && (ui->storeLayoutCheckBox->isChecked()
@@ -91,19 +91,19 @@ void ApplicationSettingsDialog::verify()
 }
 
 
-QString ApplicationSettingsDialog::windowName()
+QString QXNApplicationSettingsDialog::windowName()
 {
   return ui->windowNameEdit->text();
 }
 
 
-bool ApplicationSettingsDialog::storeLayout()
+bool QXNApplicationSettingsDialog::storeLayout()
 {
   return ui->storeLayoutCheckBox->isChecked();
 }
 
 
-ApplicationSettingsDialog::LayoutSwitching ApplicationSettingsDialog::layoutSwithching()
+QXNApplicationSettingsDialog::LayoutSwitching QXNApplicationSettingsDialog::layoutSwithching()
 {
   if (ui->layoutSwitchingGroup->isChecked())
   {

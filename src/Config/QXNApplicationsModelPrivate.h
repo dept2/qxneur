@@ -1,23 +1,18 @@
 #ifndef QXNAPPLICATIONSMODELPRIVATE_H
 #define QXNAPPLICATIONSMODELPRIVATE_H
 
+#include "QXNApplicationsMode.h"
+
+
 struct QXNApplicationsModelPrivate
 {
-  enum Mode
-  {
-    Default,
-    Auto,
-    Manual,
-    Exclusion
-  };
-
   QXNApplicationsModelPrivate()
   {
-    mode = Default;
+    mode = LayoutSwitching::Default;
     wholeApplication = false;
   }
 
-  QXNApplicationsModelPrivate(Mode m, const QString& name, bool whole = false)
+  QXNApplicationsModelPrivate(LayoutSwitching::Mode m, const QString& name, bool whole = false)
   {
     mode = m;
     appName = name;
@@ -26,7 +21,7 @@ struct QXNApplicationsModelPrivate
 
   ~QXNApplicationsModelPrivate() { };
 
-  Mode mode;
+  LayoutSwitching::Mode mode;
   QString appName;
   bool wholeApplication;
 };

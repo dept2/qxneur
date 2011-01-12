@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AbbreviationEditDialog</class>
- <widget class="QDialog" name="AbbreviationEditDialog">
+ <class>QXNAbbreviationEditDialog</class>
+ <widget class="QDialog" name="QXNAbbreviationEditDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>319</width>
-    <height>95</height>
+    <height>106</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>AbbreviationEditDialog</receiver>
+   <receiver>QXNAbbreviationEditDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -71,7 +71,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>AbbreviationEditDialog</receiver>
+   <receiver>QXNAbbreviationEditDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

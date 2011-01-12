@@ -336,13 +336,13 @@ void QXNConfig::setManualApps(const QStringList& list)
 // remember_layout parameter
 bool QXNConfig::rememberLayout() const
 {
-    return xnconfig->remember_layout;
+  return xnconfig->remember_layout;
 }
 
 
 void QXNConfig::setRememberLayout(bool on)
 {
-    xnconfig->remember_layout = on;
+  xnconfig->remember_layout = on;
 }
 
 

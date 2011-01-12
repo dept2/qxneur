@@ -1,16 +1,16 @@
-#ifndef ABBREVIATIONEDITDIALOG_H
-#define ABBREVIATIONEDITDIALOG_H
+#ifndef QXNABBREVIATIONEDITDIALOG_H
+#define QXNABBREVIATIONEDITDIALOG_H
 
 #include <QDialog>
-#include "ui_AbbreviationEditDialog.h"
+#include "ui_QXNAbbreviationEditDialog.h"
 
-class AbbreviationEditDialog : public QDialog, public Ui::AbbreviationEditDialog
+class QXNAbbreviationEditDialog : public QDialog, public Ui::QXNAbbreviationEditDialog
 {
   Q_OBJECT
 
   public:
-    AbbreviationEditDialog(QWidget* parent=0);
-    ~AbbreviationEditDialog();
+    QXNAbbreviationEditDialog(QWidget* parent=0);
+    ~QXNAbbreviationEditDialog();
 
     QString abbreviation() const;
     QString fullText() const;
@@ -23,4 +23,4 @@ class AbbreviationEditDialog : public QDialog, public Ui::AbbreviationEditDialog
     void verify();
 };
 
-#endif // ABBREVIATIONEDITDIALOG_H
+#endif // QXNABBREVIATIONEDITDIALOG_H

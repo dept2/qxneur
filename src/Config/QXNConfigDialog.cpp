@@ -6,9 +6,10 @@
 
 // Local
 #include "QXNConfig.h"
-#include "ApplicationSettingsDialog.h"
-#include "AbbreviationEditDialog.h"
+#include "QXNApplicationSettingsDialog.h"
+#include "QXNAbbreviationEditDialog.h"
 #include "QXNApplicationsModel.h"
+#include "QXNModelRoles.h"
 #include "PropertyMapper.h"
 
 // Qt
@@ -25,6 +26,15 @@ QXNConfigDialog::QXNConfigDialog(QXNConfig* config, QWidget* parent)
 {
   ui->setupUi(this);
   ui->customApplicationsView->setModel(m_appsModel);
+
+  ui->customApplicationsView->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
+  ui->customApplicationsView->horizontalHeader()->setResizeMode(0, QHeaderView::Stretch);
+  ui->customApplicationsView->setSelectionMode(QAbstractItemView::SingleSelection);
+  ui->customApplicationsView->setSelectionBehavior(QAbstractItemView::SelectRows);
+  ui->removeApplicationButton->setEnabled(false);
+
+  connect(ui->customApplicationsView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+          SLOT(customApplicationsSelectionChanged()));
 
   // Abbreviations
   connect(ui->abbreviationTable, SIGNAL(currentItemChanged(QTableWidgetItem*, QTableWidgetItem*)),
@@ -87,8 +97,6 @@ void QXNConfigDialog::on_buttonBox_clicked(QAbstractButton* button)
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void QXNConfigDialog::load()
 {
   // Sounds
@@ -145,34 +153,101 @@ void QXNConfigDialog::save()
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void QXNConfigDialog::on_addApplicationButton_clicked()
 {
-  ApplicationSettingsDialog settingsDialog(this);
+  QXNApplicationSettingsDialog settingsDialog(this);
 
   if (settingsDialog.exec() == QDialog::Accepted)
   {
-    qDebug("accepted");
+    // Default ???
+
+    QString windowName = settingsDialog.windowName();
+
+    switch (settingsDialog.layoutSwithching())
+    {
+    case QXNApplicationSettingsDialog::Automatical:
+      m_xnconfig->setAutoApps(m_xnconfig->autoApps() << windowName);
+      break;
+    case QXNApplicationSettingsDialog::Manual:
+      m_xnconfig->setManualApps(m_xnconfig->manualApps() << windowName);
+      break;
+    case QXNApplicationSettingsDialog::DontProcess:
+      m_xnconfig->setExcludedApps(m_xnconfig->excludedApps() << windowName);
+      break;
+    default:
+      break;
+    }
+
+    if (settingsDialog.storeLayout())
+      m_xnconfig->setLayoutRememberApps(m_xnconfig->layoutRememberApps() << windowName);
+
+    ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+
+    m_appsModel->load(m_xnconfig->manualApps(), m_xnconfig->autoApps(), m_xnconfig->excludedApps(),
+                      m_xnconfig->excludedApps());
   }
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void QXNConfigDialog::on_removeApplicationButton_clicked()
+{
+  QModelIndex index = ui->customApplicationsView->currentIndex();
+  int row = index.row();
+
+  bool wholeApplication = m_appsModel->data(m_appsModel->index(row, 1), Qt::CheckStateRole).toBool();
+  LayoutSwitching::Mode mode = static_cast<LayoutSwitching::Mode>(m_appsModel->data(m_appsModel->index(row, 2),
+                                                               QXNModelRoles::ModeEnumRole).toInt());
+  QString application = m_appsModel->data(m_appsModel->index(row, 0)).toString();
+
+  switch (mode)
+  {
+  case LayoutSwitching::Automatical:
+  {
+    QStringList autoApps = m_xnconfig->autoApps();
+    autoApps.removeOne(application);
+    m_xnconfig->setAutoApps(autoApps);
+  }
+  break;
+  case LayoutSwitching::Manual:
+  {
+    QStringList manualApps = m_xnconfig->manualApps();
+    manualApps.removeOne(application);
+    m_xnconfig->setManualApps(manualApps);
+  }
+  break;
+  case LayoutSwitching::DontProcess:
+  {
+    QStringList dontProcessApps = m_xnconfig->excludedApps();
+    dontProcessApps.removeOne(application);
+    m_xnconfig->setExcludedApps(dontProcessApps);
+  }
+  default: break;
+  }
+
+  if (wholeApplication)
+  {
+    QStringList wholeApplications = m_xnconfig->layoutRememberApps();
+    wholeApplications.removeOne(application);
+    m_xnconfig->setLayoutRememberApps(wholeApplications);
+  }
+
+  m_appsModel->removeRow(row);
+  ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+}
+
 
 void QXNConfigDialog::on_soundsTable_itemDoubleClicked(QTableWidgetItem* item)
 {
   ui->soundsTable->editItem(ui->soundsTable->item(item->row(), 1));
 }
 
+
 void QXNConfigDialog::on_editSoundButton_clicked()
 {
   QTableWidgetItem* current = ui->soundsTable->item(ui->soundsTable->currentRow(), 1);
   QString fileName = current->text();
   if (!fileName.isEmpty())
-  {
     fileName.left(fileName.lastIndexOf(QChar::fromAscii('/')));
-  }
   else
     fileName = QString();
 
@@ -181,11 +256,9 @@ void QXNConfigDialog::on_editSoundButton_clicked()
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 void QXNConfigDialog::on_addAbbreviationButton_clicked()
 {
-  AbbreviationEditDialog editDialog(this);
+  QXNAbbreviationEditDialog editDialog(this);
 
   bool stopFlag = false;
   int row = -1;
@@ -244,7 +317,7 @@ void QXNConfigDialog::on_removeAbbreviationButton_clicked()
   if (row < ui->abbreviationTable->rowCount())
     ui->abbreviationTable->setCurrentCell(row, 0);
   else if (ui->abbreviationTable->rowCount() > 0)
-    ui->abbreviationTable->setCurrentCell(row-1, 0);
+    ui->abbreviationTable->setCurrentCell(row - 1, 0);
 
   // Refresh the buttons
   abbreviationListChanged();
@@ -257,7 +330,7 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
   Q_ASSERT(row >= 0);
 
   // Construct the dialog
-  AbbreviationEditDialog editDialog(this);
+  QXNAbbreviationEditDialog editDialog(this);
   editDialog.setAbbreviation(ui->abbreviationTable->item(row, 0)->text());
   editDialog.setFullText(ui->abbreviationTable->item(row, 1)->text());
 
@@ -299,7 +372,9 @@ void QXNConfigDialog::on_editAbbreviationButton_clicked()
         stopFlag = true;
       }
       else
+      {
         editDialog.abbreviationEdit->setFocus(Qt::OtherFocusReason);
+      }
     }
   }
 
@@ -332,7 +407,7 @@ void QXNConfigDialog::abbreviationListChanged()
 
 int QXNConfigDialog::findAbbreviation(const QString& abbreviation)
 {
-  int ret=-1;
+  int ret = -1;
 
   for (int i = 0; i < ui->abbreviationTable->rowCount(); ++i)
     if (abbreviation == ui->abbreviationTable->item(i, 0)->text())
@@ -350,4 +425,12 @@ bool QXNConfigDialog::replaceAbbreviationQuestion(const QString& abbreviation)
   return QMessageBox::question(this, tr("QXNeur"),
                                tr("Abbreviation \"%1\" already exists. Do you want to replace it?").arg(abbreviation),
                                QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes;
+}
+
+
+void QXNConfigDialog::customApplicationsSelectionChanged()
+{
+  QModelIndexList indexes = ui->customApplicationsView->selectionModel()->selectedRows();
+  ui->removeApplicationButton->setDisabled(indexes.isEmpty());
+  ui->editApplicationButton->setDisabled(indexes.isEmpty());
 }

@@ -26,8 +26,8 @@ SET(sources
   src/PropertyMapper.cpp
   src/Config/QXNConfig.cpp
   src/Config/QXNConfigDialog.cpp
-  src/Config/ApplicationSettingsDialog.cpp
-  src/Config/AbbreviationEditDialog.cpp
+  src/Config/QXNApplicationSettingsDialog.cpp
+  src/Config/QXNAbbreviationEditDialog.cpp
   src/Config/QXNApplicationsModel.cpp
 )
 
@@ -39,15 +39,15 @@ SET(moc_headers
   src/QXNTrayIcon.h
   src/Config/QXNConfig.h
   src/Config/QXNConfigDialog.h
-  src/Config/ApplicationSettingsDialog.h
-  src/Config/AbbreviationEditDialog.h
+  src/Config/QXNApplicationSettingsDialog.h
+  src/Config/QXNAbbreviationEditDialog.h
   src/Config/QXNApplicationsModel.h
 )
 
 SET(uis
   src/Config/QXNConfigDialog.ui
-  src/Config/ApplicationSettingsDialog.ui
-  src/Config/AbbreviationEditDialog.ui
+  src/Config/QXNApplicationSettingsDialog.ui
+  src/Config/QXNAbbreviationEditDialog.ui
 )
 
 SET(resources

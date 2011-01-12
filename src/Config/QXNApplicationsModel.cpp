@@ -1,5 +1,6 @@
 // Local
 #include "QXNApplicationsModel.h"
+#include "QXNModelRoles.h"
 
 // Qt
 #include <QStringList>
@@ -69,10 +70,10 @@ QVariant QXNApplicationsModel::data(const QModelIndex& index, int role) const
     {
       switch (rowData.mode)
       {
-      case QXNApplicationsModelPrivate::Default: return tr("Default");
-      case QXNApplicationsModelPrivate::Auto: return tr("Force automatical");
-      case QXNApplicationsModelPrivate::Manual: return tr("Force manual");
-      case QXNApplicationsModelPrivate::Exclusion: return tr("Don't process");
+      case LayoutSwitching::Default: return tr("Default");
+      case LayoutSwitching::Automatical: return tr("Force automatical");
+      case LayoutSwitching::Manual: return tr("Force manual");
+      case LayoutSwitching::DontProcess: return tr("Don't process");
       }
     }
     }
@@ -81,6 +82,10 @@ QVariant QXNApplicationsModel::data(const QModelIndex& index, int role) const
   {
     if (index.column() == 1)
       return (rowData.wholeApplication) ? Qt::Checked : Qt::Unchecked;
+  }
+  else if (role == QXNModelRoles::ModeEnumRole)
+  {
+    return rowData.mode;
   }
 
   return QVariant();
@@ -93,21 +98,20 @@ void QXNApplicationsModel::load(const QStringList& manualApps, const QStringList
   QHash<QString,QXNApplicationsModelPrivate> result;
 
   foreach (const QString& manualApp, manualApps)
-    result[manualApp] = QXNApplicationsModelPrivate(QXNApplicationsModelPrivate::Manual, manualApp);
+    result[manualApp] = QXNApplicationsModelPrivate(LayoutSwitching::Manual, manualApp);
 
   foreach (const QString& autoApp, autoApps)
-    result[autoApp] = QXNApplicationsModelPrivate(QXNApplicationsModelPrivate::Auto, autoApp);
+    result[autoApp] = QXNApplicationsModelPrivate(LayoutSwitching::Automatical, autoApp);
 
   foreach (const QString& excludedApp, excludedApps)
-    result[excludedApp] = QXNApplicationsModelPrivate(QXNApplicationsModelPrivate::Exclusion, excludedApp);
+    result[excludedApp] = QXNApplicationsModelPrivate(LayoutSwitching::DontProcess, excludedApp);
 
   foreach (const QString& layoutRememberApp, layoutRememberApps)
   {
     if (result.contains(layoutRememberApp))
       result[layoutRememberApp].wholeApplication = true;
     else
-      result[layoutRememberApp] = QXNApplicationsModelPrivate(QXNApplicationsModelPrivate::Default, layoutRememberApp,
-                                                              true);
+      result[layoutRememberApp] = QXNApplicationsModelPrivate(LayoutSwitching::Default, layoutRememberApp, true);
   }
 
   beginResetModel();
@@ -115,3 +119,20 @@ void QXNApplicationsModel::load(const QStringList& manualApps, const QStringList
 
   endResetModel();
 }
+
+
+bool QXNApplicationsModel::removeRow(int row, const QModelIndex& parent)
+{
+  if (parent.isValid())
+    return false;
+
+  if (row > m_data.size() - 1)
+    return false;
+
+  beginRemoveRows(parent, row, row);
+  m_data.removeAt(row);
+  endRemoveRows();
+
+  return true;
+}
+
