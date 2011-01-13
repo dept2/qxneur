@@ -159,19 +159,17 @@ void QXNConfigDialog::on_addApplicationButton_clicked()
 
   if (settingsDialog.exec() == QDialog::Accepted)
   {
-    // Default ???
-
     QString windowName = settingsDialog.windowName();
 
     switch (settingsDialog.layoutSwithching())
     {
-    case QXNApplicationSettingsDialog::Automatical:
+    case LayoutSwitching::Automatical:
       m_xnconfig->setAutoApps(m_xnconfig->autoApps() << windowName);
       break;
-    case QXNApplicationSettingsDialog::Manual:
+    case LayoutSwitching::Manual:
       m_xnconfig->setManualApps(m_xnconfig->manualApps() << windowName);
       break;
-    case QXNApplicationSettingsDialog::DontProcess:
+    case LayoutSwitching::DontProcess:
       m_xnconfig->setExcludedApps(m_xnconfig->excludedApps() << windowName);
       break;
     default:
@@ -191,12 +189,11 @@ void QXNConfigDialog::on_addApplicationButton_clicked()
 
 void QXNConfigDialog::on_removeApplicationButton_clicked()
 {
-  QModelIndex index = ui->customApplicationsView->currentIndex();
-  int row = index.row();
+  int row = ui->customApplicationsView->currentIndex().row();
 
-  bool wholeApplication = m_appsModel->data(m_appsModel->index(row, 1), Qt::CheckStateRole).toBool();
+  bool wholeApplication = m_appsModel->data(m_appsModel->index(row, 1), QXNModelRoles::DataRole).toBool();
   LayoutSwitching::Mode mode = static_cast<LayoutSwitching::Mode>(m_appsModel->data(m_appsModel->index(row, 2),
-                                                               QXNModelRoles::ModeEnumRole).toInt());
+                                                               QXNModelRoles::DataRole).toInt());
   QString application = m_appsModel->data(m_appsModel->index(row, 0)).toString();
 
   switch (mode)
@@ -233,6 +230,9 @@ void QXNConfigDialog::on_removeApplicationButton_clicked()
 
   m_appsModel->removeRow(row);
   ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+
+  m_appsModel->load(m_xnconfig->manualApps(), m_xnconfig->autoApps(), m_xnconfig->excludedApps(),
+                    m_xnconfig->layoutRememberApps());
 }
 
 
@@ -430,7 +430,69 @@ bool QXNConfigDialog::replaceAbbreviationQuestion(const QString& abbreviation)
 
 void QXNConfigDialog::customApplicationsSelectionChanged()
 {
-  QModelIndexList indexes = ui->customApplicationsView->selectionModel()->selectedRows();
-  ui->removeApplicationButton->setDisabled(indexes.isEmpty());
-  ui->editApplicationButton->setDisabled(indexes.isEmpty());
+  bool empty = ui->customApplicationsView->selectionModel()->selectedRows().isEmpty();
+  ui->removeApplicationButton->setDisabled(empty);
+  ui->editApplicationButton->setDisabled(empty);
 }
+
+
+void QXNConfigDialog::on_editApplicationButton_clicked()
+{
+  int row = ui->customApplicationsView->currentIndex().row();
+
+  const QString& application = m_appsModel->data(m_appsModel->index(row, 0)).toString();
+  bool wholeApplication = m_appsModel->data(m_appsModel->index(row, 1), QXNModelRoles::DataRole).toBool();
+  LayoutSwitching::Mode mode = static_cast<LayoutSwitching::Mode>(m_appsModel->data(m_appsModel->index(row, 2),
+                                                                               QXNModelRoles::DataRole).toInt());
+
+  QXNApplicationSettingsDialog settingsDialog(this);
+  settingsDialog.setData(application, wholeApplication, mode);
+
+  if (settingsDialog.exec() == QDialog::Accepted)
+  {
+    QString windowName = settingsDialog.windowName();
+
+    QStringList apps = m_xnconfig->autoApps();
+    if (apps.removeOne(application))
+      m_xnconfig->setAutoApps(apps);
+
+    apps = m_xnconfig->manualApps();
+    if (apps.removeOne(application))
+      m_xnconfig->setManualApps(apps);
+
+    apps = m_xnconfig->excludedApps();
+    if (apps.removeOne(application))
+      m_xnconfig->setExcludedApps(apps);
+
+    if (wholeApplication)
+    {
+      apps = m_xnconfig->layoutRememberApps();
+      apps.removeOne(application);
+      m_xnconfig->setLayoutRememberApps(apps);
+    }
+
+    switch (settingsDialog.layoutSwithching())
+    {
+    case LayoutSwitching::Automatical:
+      m_xnconfig->setAutoApps(m_xnconfig->autoApps() << windowName);
+      break;
+    case LayoutSwitching::Manual:
+      m_xnconfig->setManualApps(m_xnconfig->manualApps() << windowName);
+      break;
+    case LayoutSwitching::DontProcess:
+      m_xnconfig->setExcludedApps(m_xnconfig->excludedApps() << windowName);
+      break;
+    default:
+      break;
+    }
+
+    if (settingsDialog.storeLayout())
+      m_xnconfig->setLayoutRememberApps(m_xnconfig->layoutRememberApps() << windowName);
+
+    ui->buttonBox->button(QDialogButtonBox::Apply)->setEnabled(true);
+
+    m_appsModel->load(m_xnconfig->manualApps(), m_xnconfig->autoApps(), m_xnconfig->excludedApps(),
+                      m_xnconfig->layoutRememberApps());
+  }
+}
+

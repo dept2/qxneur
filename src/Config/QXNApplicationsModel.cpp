@@ -2,9 +2,6 @@
 #include "QXNApplicationsModel.h"
 #include "QXNModelRoles.h"
 
-// Qt
-#include <QStringList>
-
 
 QXNApplicationsModel::QXNApplicationsModel(QObject* parent)
   : QAbstractTableModel(parent)
@@ -83,9 +80,12 @@ QVariant QXNApplicationsModel::data(const QModelIndex& index, int role) const
     if (index.column() == 1)
       return (rowData.wholeApplication) ? Qt::Checked : Qt::Unchecked;
   }
-  else if (role == QXNModelRoles::ModeEnumRole)
+  else if (role == QXNModelRoles::DataRole)
   {
-    return rowData.mode;
+    if (index.column() == 1)
+      return rowData.wholeApplication;
+    else if (index.column() == 2)
+      return rowData.mode;
   }
 
   return QVariant();
@@ -115,6 +115,7 @@ void QXNApplicationsModel::load(const QStringList& manualApps, const QStringList
   }
 
   beginResetModel();
+  m_data.clear();
   m_data = result.values();
 
   endResetModel();

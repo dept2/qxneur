@@ -32,12 +32,13 @@ QXNApplicationSettingsDialog::~QXNApplicationSettingsDialog()
 { }
 
 
-Window selectWindow(Display *dpy)
+Window selectWindow(Display* dpy)
 {
   Cursor cursor = XCreateFontCursor(dpy, XC_crosshair);
 
   Window root = RootWindow(dpy, 0);
-  XGrabPointer(dpy, root, False, ButtonPressMask|ButtonReleaseMask, GrabModeSync, GrabModeAsync, root, cursor, CurrentTime);
+  XGrabPointer(dpy, root, False, ButtonPressMask | ButtonReleaseMask, GrabModeSync, GrabModeAsync, root, cursor,
+               CurrentTime);
 
   Window target_win = None;
   int buttons = 0;
@@ -45,7 +46,7 @@ Window selectWindow(Display *dpy)
   {
     XEvent event;
     XAllowEvents(dpy, SyncPointer, CurrentTime);
-    XWindowEvent(dpy, root, ButtonPressMask|ButtonReleaseMask, &event);
+    XWindowEvent(dpy, root, ButtonPressMask | ButtonReleaseMask, &event);
     switch (event.type)
     {
       case ButtonPress:
@@ -103,17 +104,43 @@ bool QXNApplicationSettingsDialog::storeLayout()
 }
 
 
-QXNApplicationSettingsDialog::LayoutSwitching QXNApplicationSettingsDialog::layoutSwithching()
+LayoutSwitching::Mode QXNApplicationSettingsDialog::layoutSwithching()
 {
   if (ui->layoutSwitchingGroup->isChecked())
   {
     if (ui->forceAutomaticalRadioButton->isChecked())
-      return Automatical;
+      return LayoutSwitching::Automatical;
     else if (ui->forceManualRadioButton->isChecked())
-      return Manual;
+      return LayoutSwitching::Manual;
     else
-      return DontProcess;
+      return LayoutSwitching::DontProcess;
   }
 
-  return Default;
+  return LayoutSwitching::Default;
+}
+
+
+void QXNApplicationSettingsDialog::setData(const QString& application, bool wholeApplication, LayoutSwitching::Mode mode)
+{
+  ui->windowNameEdit->setText(application);
+  ui->storeLayoutCheckBox->setChecked(wholeApplication);
+
+  if (mode != LayoutSwitching::Default)
+  {
+    ui->layoutSwitchingGroup->setChecked(true);
+
+    switch (mode)
+    {
+    case LayoutSwitching::Automatical:
+      ui->forceAutomaticalRadioButton->setChecked(true);
+      break;
+    case LayoutSwitching::Manual:
+      ui->forceManualRadioButton->setChecked(true);
+      break;
+    case LayoutSwitching::DontProcess:
+      ui->dontProcessRadioButton->setChecked(true);
+      break;
+    default: break;
+    }
+  }
 }

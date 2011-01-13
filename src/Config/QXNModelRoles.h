@@ -6,7 +6,7 @@ namespace QXNModelRoles
   enum Roles
   {
     UserRole = Qt::UserRole,
-    ModeEnumRole
+    DataRole
   };
 }
 

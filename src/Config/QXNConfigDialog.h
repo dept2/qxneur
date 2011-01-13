@@ -36,6 +36,7 @@ class QXNConfigDialog : public QDialog
     // Applications
     void on_addApplicationButton_clicked();
     void on_removeApplicationButton_clicked();
+    void on_editApplicationButton_clicked();
 
     // Sounds
     void on_soundsTable_itemDoubleClicked(QTableWidgetItem*);
