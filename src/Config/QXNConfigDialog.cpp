@@ -50,6 +50,7 @@ QXNConfigDialog::QXNConfigDialog(QXNConfig* config, QWidget* parent)
   mapper->setMapping(ui->dontProcessOnEnterCheckBox, m_xnconfig, "noProcessOnEnter");
   mapper->setMapping(ui->checkLanguageDuringInputCheckBox, m_xnconfig, "checkLanguageDuringInput");
   mapper->setMapping(ui->logInputCheckBox, m_xnconfig, "saveKeyboardLog");
+  mapper->setMapping(ui->autoCompletionCheckBox, m_xnconfig, "autoCompletion");
 
   // Correction options
   mapper->setMapping(ui->correctAccidentalCapsLockCheckBox, m_xnconfig, "correctAccidentalCaps");

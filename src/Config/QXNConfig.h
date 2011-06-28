@@ -22,6 +22,7 @@ class QXNConfig : public QObject
   Q_PROPERTY(bool noProcessOnEnter READ noProcessOnEnter WRITE setNoProcessOnEnter)
   Q_PROPERTY(bool checkLanguageDuringInput READ checkLanguageDuringInput WRITE setCheckLanguageDuringInput)
   Q_PROPERTY(bool saveKeyboardLog READ saveKeyboardLog WRITE setSaveKeyboardLog)
+  Q_PROPERTY(bool autoCompletion READ autoCompletion WRITE setAutoCompletion)
 
   // Correction options
   Q_PROPERTY(bool correctAccidentalCaps READ correctAccidentalCaps WRITE setCorrectAccidentalCaps)
@@ -76,6 +77,9 @@ class QXNConfig : public QObject
 
     bool saveKeyboardLog() const;
     void setSaveKeyboardLog(bool);
+
+    bool autoCompletion() const;
+    void setAutoCompletion(bool);
 
     // Correction options
     bool correctAccidentalCaps() const;

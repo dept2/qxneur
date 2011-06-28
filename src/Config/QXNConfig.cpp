@@ -207,6 +207,15 @@ void QXNConfig::setSaveKeyboardLog(bool on)
   xnconfig->save_keyboard_log = on;
 }
 
+bool QXNConfig::autoCompletion() const
+{
+    return xnconfig->autocompletion;
+}
+
+void QXNConfig::setAutoCompletion(bool on)
+{
+    xnconfig->autocompletion = on;
+}
 
 // flush_buffer_when_press_enter parameter
 bool QXNConfig::flushInternalBuffers() const
