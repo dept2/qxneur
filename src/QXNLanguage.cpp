@@ -6,15 +6,16 @@
 
 // Qt
 #include <QMetaEnum>
+#include <QDebug>
+
 
 QXNLanguage::QXNLanguage(QObject* parent)
   : QObject(parent)
-{
-}
+{}
+
 
 QXNLanguage::~QXNLanguage()
-{
-}
+{}
 
 
 QXNLanguage::Language QXNLanguage::layoutNameToLanguage(const QString& name)
@@ -31,7 +32,8 @@ QXNLanguage::Language QXNLanguage::layoutNameToLanguage(const QString& name)
     return Danish;
   else if (name == QLatin1String("Canadian") || name == QLatin1String("Great Britain")
            || name == QLatin1String("US/ASCII") || name == QLatin1String("USA")
-           || name == QLatin1String("English") || name == QLatin1String("U.S. English"))
+           || name == QLatin1String("English") || name == QLatin1String("U.S. English")
+           || name == QLatin1String("English (US)"))
     return English;
   else if (name == QLatin1String("Spanish"))
     return Spanish;
@@ -80,7 +82,10 @@ QXNLanguage::Language QXNLanguage::layoutNameToLanguage(const QString& name)
   else if (name == QLatin1String("Vietnamese"))
     return Vietnamese;
   else
+  {
+    qWarning() << "Unsupported language:" << name;
     return Unknown;
+  }
 }
 
 
@@ -135,4 +140,3 @@ QIcon QXNLanguage::languageIcon(Language language)
 {
   return QIcon( QString(QLatin1String(":/flags/%1.png")).arg(QXNLanguage::languageToText(language)) );
 }
-

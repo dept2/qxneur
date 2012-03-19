@@ -5,7 +5,7 @@ PROJECT(qxneur)
 
 # Common CMake modules
 SET(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/CMake)
-INCLUDE(common)
+INCLUDE(CompilerFlags)
 
 # Qt
 FIND_PACKAGE(Qt4 4.6.0 REQUIRED)
@@ -23,12 +23,6 @@ SET(sources
   src/QXNKeyboard.cpp
   src/QXNMenu.cpp
   src/QXNTrayIcon.cpp
-  src/PropertyMapper.cpp
-  src/Config/QXNConfig.cpp
-  src/Config/QXNConfigDialog.cpp
-  src/Config/QXNApplicationSettingsDialog.cpp
-  src/Config/QXNAbbreviationEditDialog.cpp
-  src/Config/QXNApplicationsModel.cpp
 )
 
 SET(moc_headers
@@ -37,17 +31,6 @@ SET(moc_headers
   src/QXNKeyboard.h
   src/QXNMenu.h
   src/QXNTrayIcon.h
-  src/Config/QXNConfig.h
-  src/Config/QXNConfigDialog.h
-  src/Config/QXNApplicationSettingsDialog.h
-  src/Config/QXNAbbreviationEditDialog.h
-  src/Config/QXNApplicationsModel.h
-)
-
-SET(uis
-  src/Config/QXNConfigDialog.ui
-  src/Config/QXNApplicationSettingsDialog.ui
-  src/Config/QXNAbbreviationEditDialog.ui
 )
 
 SET(resources
@@ -67,11 +50,9 @@ ADD_CUSTOM_TARGET(${tr_target} DEPENDS ${qm_files})
 
 # Pre-processing by MOC, UIC and QRC
 QT4_WRAP_CPP(sources ${moc_headers})
-QT4_WRAP_CPP(sources src/PropertyMapper.h OPTIONS -fsrc/PropertyMapperPrivate.h)
-QT4_WRAP_UI(sources ${uis})
 QT4_ADD_RESOURCES(sources ${resources})
 
 # Building the executable
 ADD_EXECUTABLE(${bin_target} ${sources})
 ADD_DEPENDENCIES(${bin_target} ${tr_target})
-TARGET_LINK_LIBRARIES(${bin_target} ${QT_LIBRARIES} xnconfig Xmu)
+TARGET_LINK_LIBRARIES(${bin_target} ${QT_LIBRARIES} Xmu)

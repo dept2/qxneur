@@ -20,7 +20,6 @@ else
 fi
 script_dir="`echo "$script_dir" | sed -e 's%/\.$%%'`"
 current_dir=`pwd`
-cmake_module_dir="${script_dir}/CMake"
 
 # Show help
 
@@ -63,7 +62,7 @@ done
 # ... and configure now
 echo "Configuring using prefix \"${build_prefix}\" and mode \"${build_mode}\""
 echo
-cmake . -DCMAKE_BUILD_TYPE=${build_mode} -DCMAKE_INSTALL_PREFIX=${build_prefix} -DCMAKE_MODULE_PATH=${cmake_module_dir}
+cmake . -DCMAKE_BUILD_TYPE=${build_mode} -DCMAKE_INSTALL_PREFIX=${build_prefix}
 
 echo
 if [ $? -eq 0 ]; then

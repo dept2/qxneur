@@ -1,6 +1,3 @@
-// C++ Implementation: QXNTrayIcon
-// Author: Boris Moiseev <cyberbobs@gmail.com>, (C) 2009
-
 // Local
 #include "QXNTrayIcon.h"
 #include "QXNKeyboard.h"
@@ -12,10 +9,8 @@ QXNTrayIcon::QXNTrayIcon(QXNKeyboard* keyboard, QObject* parent)
   // Connect signals-slots with keyboard object
   connect(this, SIGNAL(trigger()), _keyboard, SLOT(nextGroup()));
 
-  connect(_keyboard, SIGNAL(groupChanged(QXNLanguage::Language)),
-          SLOT(keyboardGroupChanged(QXNLanguage::Language)));
-  connect(_keyboard, SIGNAL(layoutChanged()),
-          SLOT(layoutChanged()));
+  connect(_keyboard, SIGNAL(groupChanged(QXNLanguage::Language)), SLOT(keyboardGroupChanged(QXNLanguage::Language)));
+  connect(_keyboard, SIGNAL(layoutChanged()), SLOT(layoutChanged()));
 
   // Load the current state
   layoutChanged();
@@ -25,9 +20,9 @@ QXNTrayIcon::QXNTrayIcon(QXNKeyboard* keyboard, QObject* parent)
           SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 }
 
+
 QXNTrayIcon::~QXNTrayIcon()
-{
-}
+{}
 
 
 void QXNTrayIcon::keyboardGroupChanged(QXNLanguage::Language language)
@@ -36,8 +31,9 @@ void QXNTrayIcon::keyboardGroupChanged(QXNLanguage::Language language)
   setIcon(_iconMap[language]);
 
   // Show the tooltip
-  setToolTip(tr("QXNeur: current layout is %1").arg(QXNLanguage::languageToLocalizedText(language).toLower()));
+  setToolTip(tr("Current layout is %1").arg(QXNLanguage::languageToLocalizedText(language).toLower()));
 }
+
 
 void QXNTrayIcon::layoutChanged()
 {
