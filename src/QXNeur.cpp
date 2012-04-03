@@ -27,7 +27,8 @@ QXNeur::QXNeur(int argc, char** argv)
 
   // Create and install the application translator
   QTranslator* appTranslator = new QTranslator(this);
-  appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()));
+  appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()),
+                      QString(QLatin1String("%1/share")).arg(QLatin1String(INSTALL_PREFIX)));
   installTranslator(appTranslator);
 
   // Initialize keyboard object
