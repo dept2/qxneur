@@ -176,7 +176,7 @@ void QXNKeyboardPrivate::loadGroupNames()
   XSetErrorHandler(oldHandler);
 
   _groups.clear();
-  for (int i=0; i<_groupCount; i++)
+  for (int i = 0; i < _groupCount; ++i)
   {
     _groups.append(QXNLanguage::layoutNameToLanguage(QString::fromLocal8Bit(names[i])));
     if (names[i])

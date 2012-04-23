@@ -22,7 +22,6 @@ SET(sources
   src/QXNeur.cpp
   src/QXNLanguage.cpp
   src/QXNKeyboard.cpp
-  src/QXNMenu.cpp
   src/QXNTrayIcon.cpp
 )
 
@@ -30,7 +29,6 @@ SET(moc_headers
   src/QXNeur.h
   src/QXNLanguage.h
   src/QXNKeyboard.h
-  src/QXNMenu.h
   src/QXNTrayIcon.h
 )
 

@@ -4,7 +4,6 @@
 // Local
 #include "QXNeur.h"
 #include "QXNKeyboard.h"
-#include "QXNMenu.h"
 #include "QXNTrayIcon.h"
 
 // Qt
@@ -37,20 +36,12 @@ QXNeur::QXNeur(int argc, char** argv)
   // Initialize the tray icon
   trayIcon = new QXNTrayIcon(keyboard, this);
 
-  // Initialize the tray icon context menu
-  trayMenu = new QXNMenu;
-
-  // Connect the interoperation signals
-  connect(trayMenu, SIGNAL(applicationQuit()), SLOT(quit()));
-
-  trayIcon->setContextMenu(trayMenu);
   trayIcon->show();
 }
 
 
 QXNeur::~QXNeur()
 {
-  delete trayMenu;
   delete trayIcon;
 }
 

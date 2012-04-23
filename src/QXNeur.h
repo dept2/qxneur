@@ -6,8 +6,8 @@
 
 // Local
 class QXNKeyboard;
-class QXNMenu;
 class QXNTrayIcon;
+
 
 class QXNeur : public QApplication
 {
@@ -22,7 +22,6 @@ class QXNeur : public QApplication
   private:
     QXNKeyboard* keyboard;
     QXNTrayIcon* trayIcon;
-    QXNMenu* trayMenu;
 };
 
 #endif // QXNEUR_H
