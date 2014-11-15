@@ -54,7 +54,7 @@ QT4_ADD_RESOURCES(sources ${resources})
 # Building the executable
 ADD_EXECUTABLE(${bin_target} ${sources})
 ADD_DEPENDENCIES(${bin_target} ${tr_target})
-TARGET_LINK_LIBRARIES(${bin_target} ${QT_LIBRARIES} Xmu)
+TARGET_LINK_LIBRARIES(${bin_target} ${QT_LIBRARIES} X11)
 
 # Installation
 INSTALL(TARGETS ${bin_target} DESTINATION bin)
