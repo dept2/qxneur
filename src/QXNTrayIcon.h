@@ -6,6 +6,10 @@
 // Qt
 #include <QSystemTrayIcon>
 #include <QMap>
+class QMenu;
+class QAction;
+class QActionGroup;
+class QSettings;
 
 // Local
 #include "QXNLanguage.h"
@@ -17,12 +21,13 @@ class QXNTrayIcon : public QSystemTrayIcon
   Q_OBJECT
 
   public:
-    QXNTrayIcon(QXNKeyboard* keyboard, QObject* parent=0);
+    QXNTrayIcon(QXNKeyboard* keyboard, QSettings* settings, QObject* parent=0);
     ~QXNTrayIcon();
 
   signals:
     void trigger();
     void doubleClicked();
+    void keyboardGroupRequested(QXNLanguage::Language);
 
   public slots:
     void keyboardGroupChanged(QXNLanguage::Language);
@@ -30,10 +35,16 @@ class QXNTrayIcon : public QSystemTrayIcon
 
   protected slots:
     void iconActivated(QSystemTrayIcon::ActivationReason);
+    void menuActionActivated();
 
   protected:
     QMap<QXNLanguage::Language,QIcon> _iconMap;
+    QMap<QXNLanguage::Language,QAction*> _languageActions;
+
     QXNKeyboard* _keyboard;
+    QSettings* _settings;
+    QMenu* _menu;
+    QActionGroup* _actionGroup;
 };
 
 #endif // QXNTRAYICON_H

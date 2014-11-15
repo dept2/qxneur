@@ -15,7 +15,7 @@ class QXNKeyboardPrivate;
 class QXNKeyboard : public QObject
 {
   Q_OBJECT
-  Q_DECLARE_PRIVATE(QXNKeyboard);
+  Q_DECLARE_PRIVATE(QXNKeyboard)
 
   public:
     QXNKeyboard(QObject* parent=0);
@@ -32,6 +32,7 @@ class QXNKeyboard : public QObject
     void layoutChanged();
 
   public slots:
+    void setGroup(QXNLanguage::Language);
     void nextGroup();
 
   protected:

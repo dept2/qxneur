@@ -3,6 +3,7 @@
 
 // Qt
 #include <QApplication>
+class QSettings;
 
 // Local
 class QXNKeyboard;
@@ -22,6 +23,7 @@ class QXNeur : public QApplication
   private:
     QXNKeyboard* keyboard;
     QXNTrayIcon* trayIcon;
+    QSettings* settings;
 };
 
 #endif // QXNEUR_H

@@ -10,6 +10,7 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>
+#include <QSettings>
 
 
 QXNeur::QXNeur(int argc, char** argv)
@@ -17,6 +18,14 @@ QXNeur::QXNeur(int argc, char** argv)
 {
   // Tell QApplication not to close when the configuration dialog is closed
   setQuitOnLastWindowClosed(false);
+
+  // Set QApplication properties to load config
+  setOrganizationName(QLatin1String("cyberbobs"));
+  setOrganizationDomain(QLatin1String("https://github.com/cyberbobs"));
+  setApplicationName(QLatin1String("QXLayoutIndicator"));
+
+  // Settings object
+  settings = new QSettings(this);
 
   // Create and install the Qt translator
   QTranslator* qtTranslator = new QTranslator(this);
@@ -32,9 +41,18 @@ QXNeur::QXNeur(int argc, char** argv)
 
   // Initialize keyboard object
   keyboard = new QXNKeyboard(this);
+  QString defaultLayout = settings->value(QLatin1String("DefaultLayout")).toString();
+  if (!defaultLayout.isEmpty())
+  {
+    QXNLanguage::Language language = QXNLanguage::layoutNameToLanguage(defaultLayout);
+    if (language != QXNLanguage::Unknown)
+      keyboard->setGroup(language);
+  }
 
   // Initialize the tray icon
-  trayIcon = new QXNTrayIcon(keyboard, this);
+  trayIcon = new QXNTrayIcon(keyboard, settings, this);
+  connect(trayIcon, SIGNAL(keyboardGroupRequested(QXNLanguage::Language)),
+          keyboard, SLOT(setGroup(QXNLanguage::Language)));
 
   trayIcon->show();
 }

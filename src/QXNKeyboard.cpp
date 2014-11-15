@@ -7,6 +7,7 @@
 
 // Qt
 #include <QX11Info>
+#include <QDebug>
 
 // X11
 #include <X11/XKBlib.h>
@@ -74,12 +75,24 @@ QXNLanguage::Language QXNKeyboard::currentGroup()
 }
 
 
+void QXNKeyboard::setGroup(QXNLanguage::Language language)
+{
+  Q_D(QXNKeyboard);
+
+  int index = d->_groups.indexOf(language);
+  if (index != -1)
+    XkbLockGroup(QX11Info::display(), XkbUseCoreKbd, index);
+  else
+    qWarning() << "Failed to switch to group" << language << "not added as system group";
+}
+
+
 void QXNKeyboard::nextGroup()
 {
   Q_D(QXNKeyboard);
 
   // Calculate the number of new group
-  int newGroup = d->_currentGroup+1;
+  int newGroup = d->_currentGroup + 1;
   if (newGroup >= d->_groupCount)
     newGroup = 0;
 
