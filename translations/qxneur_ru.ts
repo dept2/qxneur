@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="en">
 <context>
     <name>AbbreviationEditDialog</name>
     <message>
@@ -320,14 +320,12 @@
 <context>
     <name>QXNKeyboard</name>
     <message>
-        <location filename="../src/QXNKeyboard.cpp" line="+25"/>
         <source>XKB header and library version does not match. The program may work incorrectly.</source>
-        <translation>Версия установленной библиотеки XKB не совпадает с версией, использованной при сборке. Приложение может работать некорректно.</translation>
+        <translation type="vanished">Версия установленной библиотеки XKB не совпадает с версией, использованной при сборке. Приложение может работать некорректно.</translation>
     </message>
     <message>
-        <location line="+23"/>
         <source>The X Server does not support a compatible XKB extension.</source>
-        <translation>X-сервер не поддерживает расширение XKB.</translation>
+        <translation type="vanished">X-сервер не поддерживает расширение XKB.</translation>
     </message>
 </context>
 <context>
@@ -440,12 +438,12 @@
         <translation type="obsolete">Текущий язык QXNeur: %1</translation>
     </message>
     <message>
-        <location filename="../src/QXNTrayIcon.cpp" line="+46"/>
+        <location filename="../src/QXNTrayIcon.cpp" line="+47"/>
         <source>Current layout is %1</source>
         <translation>Текущая раскладка: %1</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
@@ -455,6 +453,10 @@
     <message>
         <source>Can not start xneur (unknown error)</source>
         <translation type="obsolete">Невозможно запустить xneur (произошла неизвестная ошибка)</translation>
+    </message>
+    <message>
+        <source>Russian</source>
+        <translation type="obsolete">Русский</translation>
     </message>
 </context>
 </TS>

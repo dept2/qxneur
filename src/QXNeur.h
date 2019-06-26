@@ -2,12 +2,13 @@
 #define QXNEUR_H
 
 // Qt
+#include <QtGui>
 #include <QApplication>
 class QSettings;
 
 // Local
-class QXNKeyboard;
 class QXNTrayIcon;
+class X11Kbd;
 
 
 class QXNeur : public QApplication
@@ -18,10 +19,8 @@ class QXNeur : public QApplication
     QXNeur(int argc, char** argv);
     ~QXNeur();
 
-    bool x11EventFilter(XEvent* event);
-
   private:
-    QXNKeyboard* keyboard;
+    X11Kbd* keyboard;
     QXNTrayIcon* trayIcon;
     QSettings* settings;
 };

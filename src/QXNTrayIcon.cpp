@@ -1,13 +1,15 @@
 // Local
 #include "QXNTrayIcon.h"
-#include "QXNKeyboard.h"
+#include "KbdLayout.h"
+#include "KbdInfo.h"
 
 // Qt
 #include <QMenu>
 #include <QSettings>
+#include <QApplication>
 
 
-QXNTrayIcon::QXNTrayIcon(QXNKeyboard* keyboard, QSettings* settings, QObject* parent)
+QXNTrayIcon::QXNTrayIcon(X11Kbd* keyboard, QSettings* settings, QObject* parent)
   : QSystemTrayIcon(parent)
   , _keyboard(keyboard)
   , _settings(settings)
@@ -17,15 +19,14 @@ QXNTrayIcon::QXNTrayIcon(QXNKeyboard* keyboard, QSettings* settings, QObject* pa
   // Connect signals-slots with keyboard object
   connect(this, SIGNAL(trigger()), _keyboard, SLOT(nextGroup()));
 
-  connect(_keyboard, SIGNAL(groupChanged(QXNLanguage::Language)), SLOT(keyboardGroupChanged(QXNLanguage::Language)));
-  connect(_keyboard, SIGNAL(layoutChanged()), SLOT(layoutChanged()));
+//  connect(_keyboard, SIGNAL(groupChanged(QXNLanguage::Language)), SLOT(keyboardGroupChanged(QXNLanguage::Language)));
+  connect(_keyboard, SIGNAL(layoutChanged(uint)), SLOT(layoutChanged()));
 
   // Load the current state
   layoutChanged();
 
   // Internal connect to emit the correct signals
-  connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-          SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+  connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
   // Set icon menu
   _actionGroup->setExclusive(true);
@@ -52,25 +53,27 @@ void QXNTrayIcon::keyboardGroupChanged(QXNLanguage::Language language)
 
 void QXNTrayIcon::layoutChanged()
 {
-  QList<QXNLanguage::Language> groupList = _keyboard->groups();
-  QXNLanguage::Language currentGroup = _keyboard->currentGroup();
+  _keyboard->readKbdInfo();
+  QXNLanguage::Language currentLanguage = _keyboard->currentLayout();
 
   // Do a cleanup
   _iconMap.clear();
   _menu->clear();
   _languageActions.clear();
 
+  auto groups = _keyboard->groups();
   // Cache icons for currently used layouts and fill language menu
-  foreach (QXNLanguage::Language language, groupList)
+  for (int i = 0; i < groups.size(); ++i)
   {
+    QXNLanguage::Language language = groups.at(i);
+
     QIcon icon = QXNLanguage::languageIcon(language);
     _iconMap[language] = icon;
 
-    QAction* action =_menu->addAction(icon, QXNLanguage::languageToLocalizedText(language),
-                                      this, SLOT(menuActionActivated()));
+    QAction* action =_menu->addAction(icon, QXNLanguage::languageToLocalizedText(language), this, SLOT(menuActionActivated()));
     action->setCheckable(true);
     action->setActionGroup(_actionGroup);
-    action->setData(int(language));
+    action->setData(i);
     _languageActions[language] = action;
   }
 
@@ -78,12 +81,10 @@ void QXNTrayIcon::layoutChanged()
   if (_settings->value(QLatin1String("ShowQuitMenu"), true).toBool())
   {
     _menu->addSeparator();
-    _menu->addAction(QIcon::fromTheme(QLatin1String("application-exit")), tr("Quit"),
-                     qApp, SLOT(quit()));
+    _menu->addAction(QIcon::fromTheme(QLatin1String("application-exit")), tr("Quit"), qApp, SLOT(quit()));
   }
 
-  // And reload current icon
-  keyboardGroupChanged(currentGroup);
+  keyboardGroupChanged(currentLanguage);
 }
 
 
@@ -100,8 +101,5 @@ void QXNTrayIcon::menuActionActivated()
 {
   QAction* action = qobject_cast<QAction*>(sender());
   if (action)
-  {
-    QXNLanguage::Language language = QXNLanguage::Language(action->data().toInt());
-    emit keyboardGroupRequested(language);
-  }
+    _keyboard->lockGroup(action->data().toUInt());
 }

@@ -3,14 +3,17 @@
 
 // Local
 #include "QXNeur.h"
-#include "QXNKeyboard.h"
 #include "QXNTrayIcon.h"
+#include "KbdLayout.h"
+#include "KbdInfo.h"
 
 // Qt
 #include <QTranslator>
 #include <QLocale>
 #include <QLibraryInfo>
 #include <QSettings>
+
+#include <xcb/xcb.h>
 
 
 QXNeur::QXNeur(int argc, char** argv)
@@ -30,30 +33,30 @@ QXNeur::QXNeur(int argc, char** argv)
   // Create and install the Qt translator
   QTranslator* qtTranslator = new QTranslator(this);
   qtTranslator->load(QString(QLatin1String("qt_%1")).arg(QLocale::system().name()),
-                     QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+                                 QLibraryInfo::location(QLibraryInfo::TranslationsPath));
   installTranslator(qtTranslator);
 
   // Create and install the application translator
   QTranslator* appTranslator = new QTranslator(this);
   appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()),
-                      QString(QLatin1String("%1/share")).arg(QLatin1String(INSTALL_PREFIX)));
+                                    QString(QLatin1String("%1/share")).arg(QLatin1String(INSTALL_PREFIX)));
   installTranslator(appTranslator);
 
   // Initialize keyboard object
-  keyboard = new QXNKeyboard(this);
+  keyboard = new X11Kbd;
+  keyboard->init();
+  keyboard->readKbdInfo();
+
   QString defaultLayout = settings->value(QLatin1String("DefaultLayout")).toString();
   if (!defaultLayout.isEmpty())
   {
     QXNLanguage::Language language = QXNLanguage::layoutNameToLanguage(defaultLayout);
     if (language != QXNLanguage::Unknown)
-      keyboard->setGroup(language);
+      keyboard->setGroup(defaultLayout);
   }
 
   // Initialize the tray icon
   trayIcon = new QXNTrayIcon(keyboard, settings, this);
-  connect(trayIcon, SIGNAL(keyboardGroupRequested(QXNLanguage::Language)),
-          keyboard, SLOT(setGroup(QXNLanguage::Language)));
-
   trayIcon->show();
 }
 
@@ -61,11 +64,5 @@ QXNeur::QXNeur(int argc, char** argv)
 QXNeur::~QXNeur()
 {
   delete trayIcon;
-}
-
-
-bool QXNeur::x11EventFilter(XEvent* event)
-{
-  keyboard->x11Event(event);
-  return false;
+  delete keyboard;
 }

@@ -14,7 +14,7 @@ class QXNLanguage : public QObject
   Q_ENUMS(Language)
 
   public:
-    QXNLanguage(QObject* parent=0);
+    QXNLanguage(QObject* parent = nullptr);
     ~QXNLanguage();
 
     enum Language { Unknown, Armenian, Belarusian, Bulgarian, Czech, German, Danish, English, Estonian, Spanish,
