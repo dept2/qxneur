@@ -68,7 +68,7 @@ class X11Kbd: public QAbstractNativeEventFilter
 
     bool init()
     {
-      m_context = xkb_context_new(XKB_CONTEXT_NO_FLAGS);
+      m_context = xkb_context_new(XKB_CONTEXT_NO_DEFAULT_INCLUDES);
       m_connection = xcb_connect(nullptr, nullptr);
 
       if (!m_connection || xcb_connection_has_error(m_connection))
