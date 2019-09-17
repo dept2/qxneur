@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="ru_RU" sourcelanguage="en">
+<TS version="2.1" language="ru_RU" sourcelanguage="english">
 <context>
     <name>AbbreviationEditDialog</name>
     <message>
@@ -443,7 +443,7 @@
         <translation>Текущая раскладка: %1</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+37"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>

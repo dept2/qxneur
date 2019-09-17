@@ -12,6 +12,7 @@
 #include <QLocale>
 #include <QLibraryInfo>
 #include <QSettings>
+#include <QDebug>
 
 #include <xcb/xcb.h>
 
@@ -32,15 +33,34 @@ QXNeur::QXNeur(int argc, char** argv)
 
   // Create and install the Qt translator
   QTranslator* qtTranslator = new QTranslator(this);
-  qtTranslator->load(QString(QLatin1String("qt_%1")).arg(QLocale::system().name()),
+  bool ok = qtTranslator->load(QString(QLatin1String("qt_%1")).arg(QLocale::system().name()),
                                  QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-  installTranslator(qtTranslator);
+  if (ok)
+  {
+    installTranslator(qtTranslator);
+  }
+  else
+  {
+    qWarning() << "Failed to load Qt translation file from" << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+    delete qtTranslator;
+  }
 
   // Create and install the application translator
   QTranslator* appTranslator = new QTranslator(this);
-  appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()),
+  ok = appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()),
                                     QString(QLatin1String("%1/share")).arg(QLatin1String(INSTALL_PREFIX)));
-  installTranslator(appTranslator);
+  if (!ok)
+    ok = appTranslator->load(QString(QLatin1String("qxneur_%1")).arg(QLocale::system().name()));
+
+  if (ok)
+  {
+    installTranslator(appTranslator);
+  }
+  else
+  {
+    qWarning() << "Failed to load app translation file from" << QString(QLatin1String("%1/share")).arg(QLatin1String(INSTALL_PREFIX));
+    delete appTranslator;
+  }
 
   // Initialize keyboard object
   keyboard = new X11Kbd;
