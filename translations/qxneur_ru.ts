@@ -438,12 +438,12 @@
         <translation type="obsolete">Текущий язык QXNeur: %1</translation>
     </message>
     <message>
-        <location filename="../src/QXNTrayIcon.cpp" line="+47"/>
+        <location filename="../src/QXNTrayIcon.cpp" line="+48"/>
         <source>Current layout is %1</source>
         <translation>Текущая раскладка: %1</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+45"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>

@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QSettings>
 #include <QApplication>
+#include <QDebug>
 
 
 QXNTrayIcon::QXNTrayIcon(X11Kbd* keyboard, QSettings* settings, QObject* parent)
@@ -47,7 +48,15 @@ void QXNTrayIcon::keyboardGroupChanged(QXNLanguage::Language language)
   setToolTip(tr("Current layout is %1").arg(QXNLanguage::languageToLocalizedText(language).toLower()));
 
   // Select the right action in context menu
-  _languageActions.value(language)->setChecked(true);
+  if (_languageActions.contains(language))
+  {
+    _languageActions.value(language)->setChecked(true);
+  }
+  else
+  {
+    qWarning() << "Unknown language detected in keyboard group change:" << language;
+    qWarning() << "Available groups:" << _keyboard->groups();
+  }
 }
 
 

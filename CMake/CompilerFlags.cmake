@@ -1,6 +1,6 @@
-SET (CMAKE_CXX_FLAGS_DEBUG   "-std=gnu++0x -pipe -W -Wall -Wextra -O0 -g -fPIC")
-SET (CMAKE_CXX_FLAGS_RELEASE "-std=gnu++0x -pipe -W -Wall -Wextra -O2 -fomit-frame-pointer -fPIC -fvisibility-inlines-hidden -DQT_NO_DEBUG")
-SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-std=gnu++0x -pipe -W -Wall -Wextra -O2 -g -fomit-frame-pointer -fPIC -fvisibility-inlines-hidden -DQT_NO_DEBUG")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Wextra")
+set(CMAKE_EXE_LINKER_FLAGS "-Wl,--no-undefined")
+set(CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined")
 
-SET (CMAKE_EXE_LINKER_FLAGS "-Wl,--no-undefined")
-SET (CMAKE_SHARED_LINKER_FLAGS "-Wl,--no-undefined")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
